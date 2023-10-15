@@ -1,0 +1,41 @@
+1.Scalability
+able to handle a growing number of users, listings and transactions without any interference and performance degradation.
+
+2.User Experience (UX)
+interface should be user-friendly, intuitive, and responsive, providing a pleasant user experience. modern and minimalistic look is encouraged. 
+Should be used by people belonging to every age category.
+
+3.Security
+Implement robust security measures to protect user data, payment information, and transactions.
+Access rights, authentication must be specially taken to consideration.
+
+4.Reliability
+Ensure the system is available and reliable, with minimal downtime or issues.
+If any break-down or power outage, associated data must be always backed-up.
+
+5.Performance
+The system should be fast and responsive, even with a large number of concurrent users.
+Performance should be stead fast growing number without degradation.
+
+6.Compatibility:
+Ensure the application works on various platforms and browsers.
+
+7.Data Privacy and Compliance:
+Adhere to data privacy regulations and industry standards to protect user information.
+Always be clear and open about the privacy measurements.
+
+8.Response Time:
+Specify acceptable response times for various actions, such as searching for books or processing payments.
+
+9.Support and Maintenance:
+Plan for ongoing maintenance, updates, and user support to address issues and provide assistance.
+
+10.Offline Support:
+Offer some level of offline functionality or data caching for users in areas with unreliable internet access.
+
+11.Feedback Mechanism:
+Implement a system for collecting user feedback and using it for continuous improvement.
+
+12.Load Handling:
+Be able to handle spikes in traffic, especially during peak book-buying seasons or events.
+(September, December)
