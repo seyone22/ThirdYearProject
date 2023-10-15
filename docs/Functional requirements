@@ -1,1 +1,73 @@
+1-User Registration and Authentication
+
+Allow users to create accounts with personal information and credentials.
+Provide secure authentication mechanisms, such as username/password or OAuth.
+
+2-Book Listing and Management
+
+Enable sellers to list books with details like title, author, condition, and price (apply sections).
+Support the ability to edit, delete, or deactivate listings.
+
+3-Search and Discovery
+Implement a robust search functionality allowing users to find books by title, author, genre, or location.
+Include advanced search filters to refine results
+    ex:- type (light, published, web)
+         language
+         no of chapters
+         release frequency
+         reviews
+         ratings
+         release dates
+         genre( action, comedy, romance, fantasy, etc...)
+         tags
+
+4-Location-Based Services
+Utilize GPS or manual entry for users to specify their location.
+Enable location-based searching for users to find books available nearby.
+
+5-Book Details and Communication
+Allow users to view detailed book information, including images.
+Implement an in-app messaging system for communication between buyers and sellers.
+
+6-Transaction Management
+Support secure and transparent transactions, including online payment options.
+Allow users to schedule book pickups or deliveries.
+
+7.User Ratings and Reviews
+Enable users to leave ratings and reviews for sellers and books.
+Display these ratings and reviews to build trust within the community.
+
+8.User Notifications
+Send notifications for important events, such as new messages, transaction updates, or listing changes.
+
+9.Administrator Features
+Provide admin tools for monitoring and managing listings, users, and reported issues.
+
+10.Chat and Messaging
+Offer real-time chat functionality for users to negotiate and arrange transactions.
+
+11.Secure Transactions
+Ensure the security of financial transactions with encryption and other security measures.
+Non-Functional Features:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
