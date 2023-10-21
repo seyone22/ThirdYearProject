@@ -9,16 +9,25 @@
 \usepackage{fontspec} % Specify fonts
 \usepackage{lipsum} % For generating dummy text
 
-% define colors to be used here
+% Define custom colors
+\definecolor{darkblue}{RGB}{0,0,139}
+\definecolor{gray}{RGB}{128,128,128}
 
-%set fonts
+% Set fonts
+\setmainfont{Arial}
+\setmonofont{Courier New}
+
+% Customize section titles with numbers
+\titleformat{\section}{\clearpage\large\bfseries\color{darkblue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\bfseries\color{darkblue}}{\thesubsection}{1em}{}
+\renewcommand{\thesection}{\arabic{section}} % Number sections with Arabic numerals
+\renewcommand{\thesubsection}{\Roman{subsection}} % Number subsections with Roman numerals
 
 \begin{document}
 
-
 % Title Page
 \title{Project Proposal: Comprehensive Used Book Sale Exchange Solution}
-\author{Group Number and members}
+\author{Group 2}
 \date{Date}
 \maketitle
 
@@ -30,6 +39,63 @@
 \section{Introduction}
 The aim of this project is to develop a comprehensive used book sale exchange solution that allows private entities and users to exchange books seamlessly. This solution will leverage decentralized technologies, such as blockchain, and AI models to enhance the discovery of books by end users. The project will be implemented using the MERN (MongoDB, Express, React, Node.js) stack.
 
+% Section 2: Objectives
+\section{Objectives}
+\begin{enumerate}[label=\arabic*.]
+  \item To create a user-friendly platform for listing and discovering used books for sale or exchange.
+  \item To implement blockchain technology for secure and transparent transactions.
+  \item To develop AI models for personalized book recommendations and efficient book searches.
+  \item To provide a centralized hub for users to manage their book transactions and interactions.
+  \item To offer accessibility and scalability, enabling users to access the platform from various devices.
+\end{enumerate}
 
+% Section 3: Benefits of this Research
+\section{Benefits of this Research}
+\begin{itemize}
+  \item Empower users to easily list and find used books.
+  \item Enable secure and transparent transactions through blockchain.
+  \item Improve user experience with AI-driven book recommendations.
+  \item Streamline book discovery, reducing search times.
+  \item Promote sustainability and reuse of books, reducing waste.
+\end{itemize}
+
+% Section 4: Background
+\section{Background}
+The prevalence of online book sales and exchanges has grown significantly in recent years. However, existing systems often lack the features necessary for a comprehensive user experience. Blockchain technology can provide the security and transparency required for trustworthy transactions, while AI models can enhance book discovery.
+
+% Section 5: Material and Methods
+\section{Material and Methods}
+
+% Subsection: Proposed System Design
+\subsection{Proposed System Design}
+Our comprehensive used book sale exchange solution will consist of the following components:
+\begin{itemize}
+  \item A user-friendly web interface for book listings and searches.
+  \item Integration with blockchain for secure transactions.
+  \item AI models for book recommendations and search enhancements.
+  \item A centralized database (MongoDB) for efficient data storage and retrieval.
+  \item Backend logic implemented using Node.js and Express.
+  \item Frontend developed with React for an intuitive user interface.
+\end{itemize}
+
+% Subsection: Expected Results
+\subsection{Expected Results}
+We expect to deliver a fully functional platform that allows users to list, discover, and exchange books securely and efficiently. The system will showcase the integration of blockchain for trust and AI for enhanced user experience.
+
+% Subsection: Timeline of the Research
+\subsection{Timeline of the Research}
+\begin{itemize}
+  \item \textbf{Project Kickoff}:
+  \item \textbf{Requirements Gathering and System Design}:
+  \item \textbf{Development}:
+  \item \textbf{Testing and Quality Assurance}:
+  \item \textbf{User Testing and Feedback}:
+  \item \textbf{Final Adjustments and Optimization}:
+  \item \textbf{Documentation and Deployment}:
+\end{itemize}
+
+% Section 6: References
+\section{References}
+[Include relevant references and sources here.]
 
 \end{document}
