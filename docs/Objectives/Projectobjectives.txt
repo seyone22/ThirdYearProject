@@ -1,0 +1,10 @@
+Objectives:
+    (1)Someone asks can we build exchanging platform like books store using the decentralized technology.As an answer for it we try to build online books store 
+	  using decentralized technology.Through it all the customers can be a buyer and seller.
+    (2)Customers can see book details cling on the picture: If th customer need to know about a book deeply then click on the image of the book.And that time it 
+	  shows more information about the book.
+    (3)Book owners can get notifications: When a customer add a book to his or her favourite list book owner receives a notification about it.
+    (4)Chat facility: When a customer need to buy or exchange a book with someone, we provide chating facility.Through the chating they can share their information.
+    (5)Easily searching and filtering: For a better search can use more than one filtering methods like book title,author of the book, language, category, or ISBN.
+	  Through those things can easily identify the book.
+    (6)Increase the security of the system: Through the decentralized features we increase the security level using two factor authentication for logging. 
