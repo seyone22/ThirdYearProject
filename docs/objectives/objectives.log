@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.17)  22 OCT 2023 18:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.17)  22 OCT 2023 18:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**d:/Project/ThirdYearProject/docs/proposal.tex
-(d:/Project/ThirdYearProject/docs/proposal.tex
+**d:/Project/ThirdYearProject/docs/objectives/objectives.tex
+(d:/Project/ThirdYearProject/docs/objectives/objectives.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (c:/texlive/2023/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
@@ -237,10 +237,10 @@ l.45 \msg_fatal:nn {fontspec} {cannot-use-pdftex}
  
 Here is how much of TeX's memory you used:
  9398 strings out of 476025
- 147715 string characters out of 5794014
+ 147756 string characters out of 5794014
  1849382 words of memory out of 5000000
  29785 multiletter control sequences out of 15000+600000
  512287 words of font info for 32 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,0n,77p,571b,44s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,0n,77p,584b,44s stack positions out of 10000i,1000n,20000p,200000b,200000s
 c:/texlive/2023/texmf-dist/tex/latex/fontspec/fontspec.sty:45:  ==> Fatal error occurred, no output PDF file produced!
