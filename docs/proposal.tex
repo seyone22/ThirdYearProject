@@ -26,76 +26,116 @@
 \begin{document}
 
 % Title Page
-\title{Project Proposal: Comprehensive Used Book Sale Exchange Solution}
-\author{Group 2}
-\date{Date}
-\maketitle
+\begin{titlepage}
+    \centering
+    \vspace*{\fill}
+    \Huge\textbf{Project Proposal: Comprehensive Used Book Sale Exchange Solution}\par
+    \vspace{1cm}
+    \Large\textbf{Group 2}\par
+    \vspace{1cm}
+    \large\textbf{Date}\par
+    \vspace*{\fill}
+\end{titlepage}
 
+\newpage
+% Declaration
+\begin{titlepage}
+    \centering
+    \vspace*{\fill}
+    \Huge\textbf{Declaration}\par
+    \vspace{1cm}
+    \large
+    We declare that this project proposal is our original work and has not been submitted elsewhere.\par
+    \vspace{1cm}
+    \large\textbf{Signature:} \underline{\hspace{6cm}}\par
+    \vspace{1cm}
+    \large\textbf{Date:} \underline{\hspace{3cm}}\par
+    \vspace*{\fill}
+\end{titlepage}
+
+\newpage
 % Table of Contents
 \tableofcontents
+
 \newpage
-
-% Section 1: Introduction
 \section{Introduction}
-The aim of this project is to develop a comprehensive used book sale exchange solution that allows private entities and users to exchange books seamlessly. This solution will leverage decentralized technologies, such as blockchain, and AI models to enhance the discovery of books by end users. The project will be implemented using the MERN (MongoDB, Express, React, Node.js) stack.
+\subsection{Introduction}
+Your introduction content goes here.
 
-% Section 2: Objectives
-\section{Objectives}
-\begin{enumerate}[label=\arabic*.]
-  \item To create a user-friendly platform for listing and discovering used books for sale or exchange.
-  \item To implement blockchain technology for secure and transparent transactions.
-  \item To develop AI models for personalized book recommendations and efficient book searches.
-  \item To provide a centralized hub for users to manage their book transactions and interactions.
-  \item To offer accessibility and scalability, enabling users to access the platform from various devices.
-\end{enumerate}
+\newpage
+\subsection{Objectives}
+State the objectives of your research.
 
-% Section 3: Benefits of this Research
-\section{Benefits of this Research}
-\begin{itemize}
-  \item Empower users to easily list and find used books.
-  \item Enable secure and transparent transactions through blockchain.
-  \item Improve user experience with AI-driven book recommendations.
-  \item Streamline book discovery, reducing search times.
-  \item Promote sustainability and reuse of books, reducing waste.
-\end{itemize}
+\newpage
+\subsection{Benefits of this Research}
+Discuss the benefits of your research.
 
-% Section 4: Background
+\newpage
 \section{Background}
-The prevalence of online book sales and exchanges has grown significantly in recent years. However, existing systems often lack the features necessary for a comprehensive user experience. Blockchain technology can provide the security and transparency required for trustworthy transactions, while AI models can enhance book discovery.
+\subsection{Background}
+Provide background information on your research topic.
 
-% Section 5: Material and Methods
+\newpage
+\subsection{Review on the Existing System}
+We have conducted a comprehensive evaluation of the existing used books exchange websites. Those websites are aiming to provide a detailed overview of their features, performance, and user experience. This review serves as a foundation for our proposal to enhance and optimize the system to meet the evolving needs of our users. The mostly existing systems are focused on E-commerce or Cataloging, with limited emphasis on a comprehensive bookshop management system.
+
+Common observations of some existing systems are as follows:
+\begin{itemize}
+    \item User interfaces vary in terms of simplicity and complexity.
+    \item Integration with book databases and APIs is common for data retrieval and management.
+\end{itemize}
+
+Here's an overview of some of the globally existing websites:
+
+\subsubsection{Amazon}
+Amazon is a popular online Web-App that offers both new and used books for sale through third-party sellers. Users can find a wide selection of used books in various conditions. It offers a vast collection of books and a user-friendly interface. This system has several subcategories that the books are classified by department, format, author, promotions, prizes, languages, etc. The user rating and book description part of amazon.com are one of the best features, as it allows users to make an informed decision before purchasing a book. 
+However, the disadvantages of this website are,
+1. E-commerce focus
+2. Limited transparency
+3.lack of personalization
+4. High transaction cost
+
+\subsubsection{Goodreads}
+Goodreads primarily serves as a social platform for readers, also some users may offer books for trade or giveaway in discussion forums. This includes details about authors, publication information, and user-generated content. The site allows users to set and track reading goals for the year, which is a great feature for people who like to challenge themselves to read more. It allows users to create virtual bookshelves, rate books, and connect with other readers. However, disadvantages of this are,
+1. Limited transaction capabilities
+2. Incomplete listings
+3. Complex selling process
+
+\subsubsection{AbeBooks}
+AbeBooks is a well-established online marketplace for books, including new, used, rare, and out-of-print versions of books. Many independent sellers and bookstores list their inventory on AbeBooks, which means you can find books that may not be available on mainstream platforms. This website's interface is user-friendly, and sellers on AbeBooks typically provide detailed descriptions of the book's condition, edition, etc., as well as international shipping options. This helps buyers make informed decisions. The website consists of rare or antique books, often including first editions and signed copies. Disadvantages of using this are,
+1. Limited free listings
+2. Commercial nature
+
+Here's an overview of some of the locally existing websites:
+
+\subsubsection{Bookberry.lk}
+Bookberry is an online website that offers to sell used books online. Even though not overly famous across Sri Lanka gives the facility to bank deposit or cash on delivery option for buyers. Disadvantages are that it doesn't contain a large collection of books and user interfaces are not friendly. 
+
+\subsubsection{UsedBooks.lk}
+UsedBooks.lk is an online marketplace for books where you can find used and rare books used by independent traders around Sri Lanka for sale.
+Website contains detailed descriptions on the book's condition and photos uploaded by the seller. They also have various categories of books but the drawback is that since the books aren't categorized correctly the buyer finds trouble in sorting through the catelog looking for the book he wants. Registration process is fairly easy which creates oppotunities for fake sellers. Another notable disadvantage is that even though books have been used the prices are overly high which may discourage lot of buyers. 
+
+\subsubsection{bookswap.lk}
+BookSwap.lk is free online platform for exchange used books or sell books free online. You can buy second hand books, text books or used books by institutions. Even though they have put up an extensive collection of books the website is still completed as they haven't specified a payment method. Platform encourages to meet the buyer personally rather than online transactions which might not be appealing for some customers. 
+
+\newpage
 \section{Material and Methods}
+\subsection{Brief Description of Proposed System Design}
+Explain the proposed system design briefly.
 
-% Subsection: Proposed System Design
-\subsection{Proposed System Design}
-Our comprehensive used book sale exchange solution will consist of the following components:
-\begin{itemize}
-  \item A user-friendly web interface for book listings and searches.
-  \item Integration with blockchain for secure transactions.
-  \item AI models for book recommendations and search enhancements.
-  \item A centralized database (MongoDB) for efficient data storage and retrieval.
-  \item Backend logic implemented using Node.js and Express.
-  \item Frontend developed with React for an intuitive user interface.
-\end{itemize}
+\newpage
+\section{Expected Results}
+Discuss the expected results of your research.
 
-% Subsection: Expected Results
-\subsection{Expected Results}
-We expect to deliver a fully functional platform that allows users to list, discover, and exchange books securely and efficiently. The system will showcase the integration of blockchain for trust and AI for enhanced user experience.
+\newpage
+\section{Timeline of the Research}
+Provide a timeline for your research project.
 
-% Subsection: Timeline of the Research
-\subsection{Timeline of the Research}
-\begin{itemize}
-  \item \textbf{Project Kickoff}:
-  \item \textbf{Requirements Gathering and System Design}:
-  \item \textbf{Development}:
-  \item \textbf{Testing and Quality Assurance}:
-  \item \textbf{User Testing and Feedback}:
-  \item \textbf{Final Adjustments and Optimization}:
-  \item \textbf{Documentation and Deployment}:
-\end{itemize}
-
-% Section 6: References
+% Keep the numbered references
+\newpage
 \section{References}
-[Include relevant references and sources here.]
+\begin{thebibliography}{9}
+% Your references go here
+\end{thebibliography}
 
 \end{document}
