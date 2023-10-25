@@ -1,0 +1,129 @@
+%needs to be reviewed again
+
+\documentclass{article}
+
+\usepackage[letterpaper, margin=1in]{geometry} % Set page layout
+\usepackage{titlesec} % Customize section titles
+\usepackage{enumitem} % Customize itemize environment
+\usepackage{hyperref} % Create hyperlinks
+\usepackage{xcolor} % Define custom colors
+\usepackage{parskip} % Add spacing between paragraphs
+\usepackage{fontspec} % Specify fonts
+\usepackage{lipsum} % For generating dummy text
+
+% Define custom colors
+\definecolor{darkblue}{RGB}{0,0,139}
+\definecolor{gray}{RGB}{128,128,128}
+
+% Set fonts
+\setmainfont{Arial}
+\setmonofont{Courier New}
+
+% Customize section titles with numbers
+\titleformat{\section}{\clearpage\large\bfseries\color{darkblue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\bfseries\color{darkblue}}{\thesubsection}{1em}{}
+\renewcommand{\thesection}{\arabic{section}} % Number sections with Arabic numerals
+\renewcommand{\thesubsection}{\Roman{subsection}} % Number subsections with Roman numerals
+
+\begin{document}
+
+% Section 1: Features
+\section{Features}
+
+% Subsection 1.1: User Authentication and Authorization
+\subsection{User Authentication and Authorization}
+\begin{itemize}
+  \item Users can log in and sign up using a username, password, and email or via Facebook.
+  \item Bookshops can register by providing the following information:
+  \begin{itemize}
+    \item Shop name
+    \item Contact information (Address, Phone Number, Email Address)
+    \item Owner/manager information (Name, Contact Number, Email Address)
+    \item Hours of operation
+    \item Shop description
+    \item Shop policies (Terms and Conditions, Return Policy)
+    \item Inventory quantity
+    \item Social media links
+    \item Website URL
+  \end{itemize}
+\end{itemize}
+
+% Subsection 1.2: Book Listing
+\subsection{Book Listing}
+\begin{itemize}
+  \item Users and bookshops can list books manually or by using barcode.
+\end{itemize}
+
+% Subsection 1.3: Search and Filter
+\subsection{Search and Filter}
+\begin{itemize}
+  \item Use Title, Author, Genre/Category, ISBN, Condition, Price Range, Location/Distance, Language as filters for better search.
+\end{itemize}
+
+% Subsection 1.4: Book Details
+\subsection{Book Details}
+\begin{itemize}
+  \item Users can click on the book picture to view all the details relevant to the book.
+\end{itemize}
+
+% Subsection 1.5: User Profiles
+\subsection{User Profiles}
+\begin{itemize}
+  \item User profiles show user-purchased books (only visible to the profile owner) and the user's basic details.
+  \item Bookshop profiles show all the details of the shop that buyers should know.
+\end{itemize}
+
+% Subsection 1.6: Notifications
+\subsection{Notifications}
+\begin{itemize}
+  \item If a user adds a book to their favorite list, it notifies the book owner or bookshop.
+  \item If the book is not available to the user, the system will notify the user if the book is listed within one week.
+\end{itemize}
+
+% Subsection 1.7: Transactions and Payments
+\subsection{Transactions and Payments}
+[Description of transactions and payments features goes here.]
+
+% Section 2: Technology Stack
+\section{Technology Stack}
+
+% Subsection 2.1: Front-end
+\subsection{Front-end}
+[Description of front-end technologies goes here.]
+
+% Subsection 2.2: Backend
+\subsection{Backend}
+[Description of backend technologies goes here.]
+
+% Subsection 2.3: Database
+\subsection{Database}
+[Description of the database technology goes here.]
+
+% Subsection 2.4: External APIs
+\subsection{External APIs}
+[Description of external APIs used goes here.]
+
+% Subsection 2.5: Hosting and Deployment
+\subsection{Hosting and Deployment}
+[Description of hosting and deployment goes here.]
+
+% Subsection 2.6: Security
+\subsection{Security}
+[Description of security measures goes here.]
+
+% Section 3: Security
+\section{Security}
+
+% Subsection 3.1: Data Encryption
+\subsection{Data Encryption}
+\begin{itemize}
+  \item Encrypt and store users' and sellers' sensitive data.
+\end{itemize}
+
+% Subsection 3.2: Authentication
+\subsection{Authentication}
+\begin{itemize}
+  \item Use two-factor authentication for logging in.
+\end{itemize}
+
+\end{document}
