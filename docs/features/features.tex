@@ -1,34 +1,4 @@
-%needs to be reviewed again
-
-\documentclass{article}
-
-\usepackage[letterpaper, margin=1in]{geometry} % Set page layout
-\usepackage{titlesec} % Customize section titles
-\usepackage{enumitem} % Customize itemize environment
-\usepackage{hyperref} % Create hyperlinks
-\usepackage{xcolor} % Define custom colors
-\usepackage{parskip} % Add spacing between paragraphs
-\usepackage{fontspec} % Specify fonts
-\usepackage{lipsum} % For generating dummy text
-
-% Define custom colors
-\definecolor{darkblue}{RGB}{0,0,139}
-\definecolor{gray}{RGB}{128,128,128}
-
-% Set fonts
-\setmainfont{Arial}
-\setmonofont{Courier New}
-
-% Customize section titles with numbers
-\titleformat{\section}{\clearpage\large\bfseries\color{darkblue}}{\thesection}{1em}{}
-\titleformat{\subsection}{\bfseries\color{darkblue}}{\thesubsection}{1em}{}
-\renewcommand{\thesection}{\arabic{section}} % Number sections with Arabic numerals
-\renewcommand{\thesubsection}{\Roman{subsection}} % Number subsections with Roman numerals
-
-\begin{document}
-
-% Section 1: Features
-\section{Features}
+% \begindocument and other commands not necessary.
 
 % Subsection 1.1: User Authentication and Authorization
 \subsection{User Authentication and Authorization}
@@ -125,5 +95,3 @@
 \begin{itemize}
   \item Use two-factor authentication for logging in.
 \end{itemize}
-
-\end{document}
