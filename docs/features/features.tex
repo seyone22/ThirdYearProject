@@ -1,9 +1,34 @@
 % \begindocument and other commands not necessary.
+\subsection*{Book Database}
+The book database will be built leveraging blockchain technologies, with the aim of creating an
+open and decentralized repository of book metadata. This repository will be used to power the
+search and recommendation systems. Transaction and availability data will also be stored on the
+blockchain or on layered solutions depending on the use case.
 
-% Subsection 1.1: User Authentication and Authorization
-\subsection{User Authentication and Authorization}
+Techniques to automate data ingest, including scraping data from web APIs and websites, will be
+explored in order to maximize the size and relevance of the database, especially with regards to
+Sinhala and Tamil language resources.
+
+\subsection*{Open Recommendation System}
+The Recommendation System will utilize AI/ML models to provide personalized book recommendations
+to users based on their preferences. The system will generate user profiles based on browsing
+history, purchase history, and other relevant data. The system will easily integrate with existing
+storefronts.
+
+\subsection*{Open Book Search}
+The book search will utilize the recommendation system, to provide relevant and accurate results
+to the user. This system will also be built in a way as to ensure compatibility with existing and
+new systems.
+
+\subsection*{Book Marketplace and Discovery Platform}
+A marketplace and discovery platform will be built to showcase the features and functionality of the
+recommendatio, search systems, and the book database. This platform will contain all the necessary
+features and functionality necessary for a modern book marketplace, including user profiles, messaging,
+and a book listing system.
+
+\subsubsection*{Authentication and Authorization}
 \begin{itemize}
-  \item Users can log in and sign up using a username, password, and email or via Facebook.
+  \item Users can log in and sign up using a username, password, and email or via OAUTH.
   \item Bookshops can register by providing the following information:
   \begin{itemize}
     \item Shop name
@@ -19,79 +44,76 @@
 \end{itemize}
 
 % Subsection 1.2: Book Listing
-\subsection{Book Listing}
+\subsubsection{Book Listing}
 \begin{itemize}
   \item Users and bookshops can list books manually or by using barcode.
 \end{itemize}
 
-% Subsection 1.3: Search and Filter
-\subsection{Search and Filter}
-\begin{itemize}
-  \item Use Title, Author, Genre/Category, ISBN, Condition, Price Range, Location/Distance, Language as filters for better search.
-\end{itemize}
-
 % Subsection 1.4: Book Details
-\subsection{Book Details}
+\subsubsection{Book Details}
 \begin{itemize}
   \item Users can click on the book picture to view all the details relevant to the book.
 \end{itemize}
 
 % Subsection 1.5: User Profiles
-\subsection{User Profiles}
+\subsubsection{User Profiles}
 \begin{itemize}
   \item User profiles show user-purchased books (only visible to the profile owner) and the user's basic details.
   \item Bookshop profiles show all the details of the shop that buyers should know.
 \end{itemize}
 
 % Subsection 1.6: Notifications
-\subsection{Notifications}
+\subsubsection{Notifications}
 \begin{itemize}
   \item If a user adds a book to their favorite list, it notifies the book owner or bookshop.
   \item If the book is not available to the user, the system will notify the user if the book is listed within one week.
 \end{itemize}
-
-% Subsection 1.7: Transactions and Payments
-\subsection{Transactions and Payments}
-[Description of transactions and payments features goes here.]
 
 % Section 2: Technology Stack
 \section{Technology Stack}
 
 % Subsection 2.1: Front-end
 \subsection{Front-end}
-[Description of front-end technologies goes here.]
+The front-end will be built using ReactJS, a JavaScript library for building user interfaces. Building on
+ReactJS gives us the option to use the same codebase to build a web application and a mobile application
+if necessary.
 
 % Subsection 2.2: Backend
 \subsection{Backend}
-[Description of backend technologies goes here.]
+The backend for the storefront will be built using NextJS, a ReactJS framework for building server-side
+rendered applications. The backend for the blockchain will be built using Solidity, a smart contract
+programming language for the Ethereum blockchain. The backend for the recommendation and search systems
+will be built using Python, with the use of the TensorFlow and PyTorch libraries for machine learning.
 
 % Subsection 2.3: Database
 \subsection{Database}
-[Description of the database technology goes here.]
+Tentatively, we are exploring the use of Ethereum based private blockchains for storing data, in combination
+with a MongoDB database for a hybrid on-chain/off-chain solution. 
 
 % Subsection 2.4: External APIs
 \subsection{External APIs}
-[Description of external APIs used goes here.]
+External APIs will be used in the Marketplace and Discovery Platform for the following purposes:
+\begin{itemize}
+  \item Google Maps API for location services
+  \item Google Books API for book metadata
+  \item Google Translate API for translation services
+\end{itemize}
 
 % Subsection 2.5: Hosting and Deployment
 \subsection{Hosting and Deployment}
-[Description of hosting and deployment goes here.]
+We are planning on using free hosting solutions for the initial deployment, such as Vercel.
 
 % Subsection 2.6: Security
 \subsection{Security}
-[Description of security measures goes here.]
-
-% Section 3: Security
-\section{Security}
 
 % Subsection 3.1: Data Encryption
-\subsection{Data Encryption}
+\subsubsection{Data Encryption}
 \begin{itemize}
   \item Encrypt and store users' and sellers' sensitive data.
 \end{itemize}
 
 % Subsection 3.2: Authentication
-\subsection{Authentication}
+\subsubsection{Authentication}
 \begin{itemize}
   \item Use two-factor authentication for logging in.
 \end{itemize}
