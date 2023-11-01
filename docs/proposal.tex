@@ -13,7 +13,11 @@
 % Specify fonts
 \usepackage{lipsum} % For generating dummy text
 
-% define colors to be used here
+% For references
+\usepackage[style=apa,backend=biber]{biblatex}
+
+\addbibresource{proposal.bib} % Replace 'your_bibliography' with your actual .bib file
+
 
 %set fonts
 
@@ -39,22 +43,22 @@ institution.
 \vspace{2cm} % Add vertical space for the signature line
 \rule{5cm}{0.5pt} % Change the width here (e.g., \rule{10cm}{0.5pt})
 \linebreak
-Ashma Sandeepa (2019/ICT/46)
+J.A.A.S Jayawickrama (2019/ICT/85)
 
 \vspace{2cm} % Add vertical space for the signature line
 \rule{5cm}{0.5pt} % Change the width here (e.g., \rule{10cm}{0.5pt})
 \linebreak
-Charith (2019/ICT/46)
+J.D.C.D.L. Jayarathne (2019/ICT/64)
 
 \vspace{2cm} % Add vertical space for the signature line
 \rule{5cm}{0.5pt} % Change the width here (e.g., \rule{10cm}{0.5pt})
 \linebreak
-Ihansa (2019/ICT/46)
+m.a. iHANSA (2019/ICT/35)
 
 \vspace{2cm} % Add vertical space for the signature line
 \rule{5cm}{0.5pt} % Change the width here (e.g., \rule{10cm}{0.5pt})
 \linebreak
-Mithini (2019/ICT/46)
+R.M.M.K Rathnayaka (2019/ICT/24)
 
 \vspace{2cm} % Add vertical space for the signature line
 \rule{5cm}{0.5pt} % Change the width here (e.g., \rule{10cm}{0.5pt})
@@ -64,17 +68,17 @@ S.G.Seyone (2019/ICT/46)
 \vspace{2cm} % Add vertical space for the signature line
 \rule{5cm}{0.5pt} % Change the width here (e.g., \rule{10cm}{0.5pt})
 \linebreak
-Sonali Jayarathne (2019/ICT/46)
+M.G. Sonali Kalpani Jayarathne (2019/ICT/108)
 
 \vspace{2cm} % Add vertical space for the signature line
 \rule{5cm}{0.5pt} % Change the width here (e.g., \rule{10cm}{0.5pt})
 \linebreak
-Tharushi Nimnadi (2019/ICT/46)
+R.A. Tharushi Nimnadi (2019/ICT/66)
 
 \vspace{2cm} % Add vertical space for the signature line
 \rule{5cm}{0.5pt} % Change the width here (e.g., \rule{10cm}{0.5pt})
 \linebreak
-Zeena Navavi (2019/ICT/46)
+M.N. Fathima Zeena (2019/ICT/98)
 
 \newpage
 
@@ -113,9 +117,13 @@ discover books that they may be interested in.
 \input{features/features}
 
 \section{Timeline of the Research}
-
 \input{timeline/ganttchart}
 
 \section{References}
+\printbibliography
+
+\section{Appendix}
+\input{appendices/appendixI}
+
 
 \end{document}
