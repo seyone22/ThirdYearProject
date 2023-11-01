@@ -1,0 +1,21 @@
+\begin{landscape}
+
+\begin{ganttchart}[
+  hgrid,
+  vgrid,
+  x unit = 0.1cm,
+  time slot format=isodate-yearmonth,
+  time slot unit=day,
+]{2023-10-01}{2024-02-29}
+  \gantttitlecalendar{year, month=shortname} \\
+
+  \ganttbar{Topic Research}{2023-10-01}{2023-10-08} \\
+  \ganttmilestone{Topic Selection}{2023-10-08} \\
+  \ganttbar{Proposal Writing}{2023-10-09}{2023-11-01} \\
+  \ganttmilestone{Proposal Submission}{2023-11-01} \\
+  \ganttbar{Requirements Engineering Finalization}{2023-11-02}{2023-11-12} \\
+  \ganttbar{Design and Implementation}{2023-11-13}{2024-02-29} \\
+  
+\end{ganttchart}
+
+\end{landscape}

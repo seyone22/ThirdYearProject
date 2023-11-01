@@ -5,6 +5,10 @@
 \usepackage{enumitem} % Customize itemize environment
 \usepackage{hyperref} % Create hyperlinks
 \usepackage{xcolor} % Define custom colors
+\usepackage{babel}
+\usepackage{pdflscape} % To create a landscape page for the Gantt chart
+\usepackage[useregional]{datetime2}
+\usepackage{pgfgantt}
 \usepackage{parskip} % Add spacing between paragraphs 
 % Specify fonts
 \usepackage{lipsum} % For generating dummy text
@@ -18,7 +22,7 @@
 % Title Page
 \title{Project Proposal: Comprehensive Used Book Sale Exchange Solution}
 \author{Group Number and members}
-\date{Date}
+\date{ \today }
 \maketitle
 
 \newpage
@@ -71,6 +75,8 @@ implemented using the MERN (MongoDB, Express, React, Node.js) stack.
 \input{features/features}
 
 \section{Timeline of the Research}
+
+\input{timeline/ganttchart}
 
 \section{References}
 
