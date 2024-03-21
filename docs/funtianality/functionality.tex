@@ -1,0 +1,80 @@
+\documentclass[english,10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\title{Functionality Of The Book Exchange System}
+\author{Ashma Sandeepa}
+\begin{document}
+	\maketitle
+	\large{Through this system, individuals can exchange their books with someone else and also buy new books from bookstores registered in the system.}
+	
+	\section*{1. Features}
+		\subsection*{1.1 User Authentication and Authorization}
+			\begin{itemize}
+			\item User can Loging and sign-up using username, password and email or Facebook.
+			\item Bookshops can register by entering the following information: shop name, contact information (Address, Phone Number, Email Address), owner/manager information (Name, Contact Number, Email Address), hours of operation, shop description, shop policies (Terms and Conditions, Return Policy), inventory quantity, social media links, and website URL.
+			\end{itemize}
+		\subsection*{1.2 Book Listing}
+			\begin{itemize}
+				\item User and Book shop can list books manually or using barcode.
+			\end{itemize}
+		\subsection*{1.3 Search and Filter}
+			\begin{itemize}
+				\item Use Title, Author, Genre/Category, ISBN, Condition, Price Range, Location/Distance, Language as a filter to better search.
+			\end{itemize}
+		\subsection*{1.4 Book Details}
+			\begin{itemize}
+			\item User click the book picture then show all the detail relevant to the book.
+			\end{itemize}
+		\subsection*{1.5 User Profiles}
+			\begin{itemize}
+				\item User profile shows user purchased books (only show to profile owner) and user’s basic detail.
+				\item Book shop profile show all the details of the shop buyer should know.
+			\end{itemize}
+		\subsection*{1.6 Notifications}
+			\begin{itemize}
+				\item If user add a book to favourite list it notifies to that book owner or book shop. 
+				\item If the book is not available to the user, the system will notify the user if the book is listed in the system within one week.
+			\end{itemize}
+		\subsection*{1.7 Transactions and Payments}
+		
+		
+	\section*{2. Technology Stack}
+		\subsection*{2.1 Front-end}	
+			\begin{itemize}
+				\item design UI using figma. 
+				\item Use React for Frant end coding.
+			\end{itemize}
+		\subsection*{2.2 Backend}
+			\begin{itemize}
+				\item Use Node.js for Back-end coding. 
+			\end{itemize}
+		\subsection*{2.3 Database}
+			\begin{itemize}
+				\item Use MongoDB for create Database. 
+			\end{itemize}
+		\subsection*{2.4 External APIs}
+			\begin{itemize}
+				\item Payment Gateway API (Stripe, PayPal): Allows secure online payments for book transactions
+				\item Geolocation API (Google Maps API): Helps users locate nearby book sellers or potential exchange partners.
+				\item Email Notifications API (SendGrid, Mailgun): Enables automated email notifications for events like registration confirmation, message alerts, and more.
+				\item Search and Recommendations API (Algolia, Elasticsearch): Enhances the search and filtering capabilities for books.
+				\item Social Media Integration API (Facebook): Enables users to log in or share listings via their social media accounts
+				\item ISBN Database API (Open Library API): Allows for easy retrieval of book information based on ISBN numbers.
+				\item Image Recognition API (Google Cloud Vision, Amazon Rekognition): Helps users quickly upload book covers by recognizing images.
+				\item Social Sharing API (AddThis, ShareThis): Allows users to easily share book listings on various social media platforms.
+			\end{itemize}
+		\subsection*{2.5 Hosting and Deployment}
+		\subsection*{2.6 Use Decentralized servers for storing book list for more secure.}
+		
+	\section*{3. Security}
+		\subsection*{3.1 encrypt and store users and sellers sensitive  data}
+		\subsection*{3.2 Use two factor authentication for logging.}
+			
+		
+			
+			
+		
+		
+			
+	
+\end{document}
