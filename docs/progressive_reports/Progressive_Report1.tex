@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{lipsum} % for dummy text
+\usepackage{tikz} % for drawing borders
+
+% Define page borders
+\usepackage{eso-pic}
+\AddToShipoutPictureBG{%
+  \AtPageLowerLeft{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \draw[line width=2pt] (current page.north west) rectangle (current page.south east);
+    \end{tikzpicture}
+  }
+}
+
+\title{Progressive Report on Software Development Project }
+\author{Group 2}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+% Your introduction goes here
+
+\section{Project Overview}
+% Overview of the project
+
+\section{Current Progress}
+% Progress made so far
+
+\section{Challenges Faced}
+% Discuss challenges faced during the project
+
+\section{Next Steps}
+% Outline the next steps in the project
+
+\end{document}
