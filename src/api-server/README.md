@@ -6,7 +6,7 @@ runtime. Name your environment whatever you'd like
 <br>
 ``python -m venv myenv``
 
-First, activate the virtual environment using,
+Then, activate the virtual environment using,
 <br>
 ``.\venv\Scripts\activate``
 
