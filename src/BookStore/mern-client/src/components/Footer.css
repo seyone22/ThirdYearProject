@@ -1,0 +1,44 @@
+/* Footer container */
+.footer-container {
+    background-color: #333; /* Dark background color */
+    color: #fff; /* Text color */
+    padding: 20px; /* Padding around the content */
+    text-align: center; /* Center-align the content */
+  }
+  
+  /* Footer brand */
+  .footer-brand img {
+    height: 30px; /* Adjust the height of the logo image */
+    vertical-align: middle; /* Align the image vertically */
+    margin-right: 10px; /* Add some space to the right of the logo */
+  }
+  
+  /* Footer links */
+  .footer-link {
+    color: #fff; /* Link text color */
+    text-decoration: none; /* Remove default underline */
+    margin-right: 10px; /* Add space between links */
+  }
+  
+  /* Footer link group */
+  .footer-link-group {
+    margin-bottom: 10px; /* Add space between link groups */
+  }
+  
+  /* Footer divider */
+  .footer-divider {
+    border: none; /* Remove default border */
+    border-top: 1px solid #fff; /* Add a white border on top */
+    margin: 20px 0; /* Add space above and below the divider */
+  }
+  
+  /* Footer copyright */
+  .footer-copyright {
+    font-size: 14px; /* Adjust the font size */
+    margin-top: 20px; /* Add space above the copyright */
+  }
+  
+  .footer-copyright p {
+    margin-bottom: 5px; /* Add space below the copyright text */
+  }
+  
