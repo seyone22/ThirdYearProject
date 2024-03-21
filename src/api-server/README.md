@@ -1,6 +1,11 @@
 # How to run
 
 Run the API Server using the following commands.
+First, create a virtual environment  for your python
+runtime. Name your environment whatever you'd like
+<br>
+``python -m venv myenv``
+
 First, activate the virtual environment using,
 <br>
 ``.\venv\Scripts\activate``
