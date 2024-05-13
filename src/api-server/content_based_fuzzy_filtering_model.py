@@ -1,6 +1,6 @@
 import pandas as pd
 from ast import literal_eval
-from model.components.featureExtractors.feature_extractor_distilbert import FeatureExtractor
+from model.components.featureExtractors.feature_extractor_tf_idf import FeatureExtractor
 from model.components.preprocessors.data_preprocessor_v2 import DataPreprocessor
 from sklearn.metrics.pairwise import cosine_similarity
 from fuzzywuzzy import fuzz
@@ -47,10 +47,15 @@ def recommend_items(title, similarity_measure=cosine_sim):
         similarity_score = fuzz.partial_ratio(title, idx_title.lower())
         if similarity_score > 80:
             matches.append((idx_title, similarity_score))
-    title = sorted(matches, key=lambda x: x[1], reverse=True)
+
+    matches = sorted(matches, key=lambda x: x[1], reverse=True)
+
+    if not matches:
+        return []
+    matched_title = matches[0][0]
 
     # Get the index of the item that matches the title
-    idx = indices[title]
+    idx = indices[matched_title]
 
     # Get the pairwise similarity scores of all items with that item
     sim_scores = list(enumerate(similarity_measure[idx]))
