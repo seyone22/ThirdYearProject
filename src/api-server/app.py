@@ -16,10 +16,12 @@ print('Date import complete.\n')
 # Load models
 models = {
     'tf-idf': load('model-tf-idf.joblib'),
+    'fuzzy-tf-idf': load('model-fuzzy-tf-idf.joblib')
     # Add other models here
 }
 
 data_index = pd.Series(books_df.index, index=books_df['title']).drop_duplicates()
+
 
 def validate_request_data(data):
     if not data:
@@ -40,9 +42,6 @@ def predict():
         return error_response, 400
 
     title = data['title']
-    # Check if the selected model is active
-    if title not in data_index:
-        return {'error': 'Book not in database.'}, 404
 
     selected_model = data.get('model')
     # Check if the selected model is active
@@ -52,8 +51,11 @@ def predict():
     # Select the model
     model = models[selected_model]
 
-    # Run the prediction, and return data
+    # Run the prediction, and see if it's empty
     prediction = model(title)
+    if len(prediction) == 0:
+        return {'error': 'Book not found in database'}, 404
+
     return {'prediction': prediction.tolist()}
 
 
