@@ -17,6 +17,7 @@ print('Date import complete.\n')
 models = {
     'tf-idf': load('model-tf-idf.joblib'),
     'fuzzy-tf-idf': load('model-fuzzy-tf-idf.joblib')
+    # 'distilbert': load('model-distilbert.joblib')
     # Add other models here
 }
 
