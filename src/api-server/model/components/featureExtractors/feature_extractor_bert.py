@@ -1,20 +1,22 @@
-from transformers import BertTokenizer, BertModel
+from transformers import BertTokenizer, TFBertModel
 import pandas as pd
 import numpy as np
 import tensorflow as tf
 
-
 class FeatureExtractor:
     def __init__(self, model_name="bert-base-uncased"):
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
-        self.model = BertModel.from_pretrained(model_name)
+        self.model = TFBertModel.from_pretrained(model_name)
 
     def extract_features(self, books_df_processed):
         document_embeddings = []
         for author, title, desc in zip(books_df_processed['author'], books_df_processed['title'],
                                        books_df_processed['description']):
+            # Concatenate author, title, and description
+            input_text = author + ' ' + title + ' ' + desc
+
             # Tokenize input text
-            inputs = self.tokenizer(author, padding=True, truncation=True, return_tensors="tf")
+            inputs = self.tokenizer(input_text, padding=True, truncation=True, return_tensors="tf")
 
             # Forward pass through BERT model
             outputs = self.model(inputs)
