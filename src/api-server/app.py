@@ -33,6 +33,14 @@ def validate_request_data(data):
     return True, None
 
 
+@app.route('/models', methods=['GET'])
+def get_available_models():
+    if len(models) == 0:
+        return {'error': 'No active models'}, 500
+    else:
+        return {'models': list(models.keys())}
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
