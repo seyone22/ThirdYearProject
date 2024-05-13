@@ -5,7 +5,7 @@ import pandas as pd
 
 
 class FeatureExtractor:
-    def extractFeatures(self, books_df_processed):
+    def extract_features(self, books_df_processed):
         vectorizer = TfidfVectorizer()
 
         # Count of unique authors

@@ -12,7 +12,7 @@ Original file is located at
 import pandas as pd
 from ast import literal_eval
 
-from model.components.featureExtractors.feature_extractor_v2 import FeatureExtractor
+from model.components.featureExtractors.feature_extractor_bert import FeatureExtractor
 from model.components.preprocessors.data_preprocessor_v2 import DataPreprocessor
 
 # Set the float format
@@ -53,7 +53,7 @@ books_df_processed = preprocessor.preprocess(books_df)
 """# Feature Extraction"""
 
 featureExtractor = FeatureExtractor()
-composite_feature_vector = featureExtractor.extractFeatures(books_df_processed)
+composite_feature_vector = featureExtractor.extract_features(books_df_processed)
 
 """# Similarity Measure
 
