@@ -12,6 +12,9 @@ Original file is located at
 import pandas as pd
 from ast import literal_eval
 
+from model.components.featureExtractors.feature_extractor_v2 import FeatureExtractor
+from model.components.preprocessors.data_preprocessor_v2 import DataPreprocessor
+
 # Set the float format
 pd.options.display.float_format = '{:.2f}'.format
 
@@ -44,54 +47,13 @@ We're going to keep the following columns.
 6.   description
 """
 
-# Columns of the dataset we are interested in for this model
-columns_to_keep = \
-    ['authors', 'average_rating', 'genres', 'language_code', 'title', 'description']
-
-# Subset of the dataset with only the above columns
-books_df_subset = books_df[columns_to_keep]
-
-# Extract the first author of the authors list and use it.
-books_df_subset['author'] = books_df_subset['authors'].apply(lambda x: x[0]).astype(str)
-# Count of unique authors
-count_of_unique_authors = books_df_subset['author'].nunique()
-
-# Remove NaNs from the description column
-books_df_subset['description'] = books_df_subset['description'].fillna('')
-
-# Remove NaNs from the original_title column
-books_df_subset['title'] = books_df_subset['title'].fillna('')
-books_df_subset['title'] = books_df_subset['title'].str.lower()
+preprocessor = DataPreprocessor()
+books_df_processed = preprocessor.preprocess(books_df)
 
 """# Feature Extraction"""
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction import FeatureHasher
-from sklearn.preprocessing import MultiLabelBinarizer
-
-vectorizer = TfidfVectorizer()
-hasher = FeatureHasher(n_features=count_of_unique_authors, input_type='string')
-mlb = MultiLabelBinarizer()
-
-# Hash the authors
-# author_features = hasher.transform(books_df_subset['author'])
-
-# Binarize the genres column
-binarized_genres = mlb.fit_transform(books_df_subset['genres'])
-
-# One-hot encode the language_code
-books_df_subset = pd.get_dummies(books_df_subset, columns=['language_code'])
-
-# Vectorize the title column
-title_features = vectorizer.fit_transform(books_df_subset['title'])
-
-# Vectorize the description column
-description_features = vectorizer.fit_transform(books_df_subset['description'])
-
-from scipy.sparse import hstack
-
-# Composite feature Vector
-composite_feature_vector = hstack([binarized_genres, title_features, description_features])
+featureExtractor = FeatureExtractor()
+composite_feature_vector = featureExtractor.extractFeatures(books_df_processed)
 
 """# Similarity Measure
 
@@ -111,8 +73,7 @@ cosine_sim = cosine_similarity(composite_feature_vector)
 # Test
 """
 
-indices = pd.Series(books_df_subset.index, index=books_df_subset['title']).drop_duplicates()
-
+indices = pd.Series(books_df_processed.index, index=books_df_processed['title']).drop_duplicates()
 
 def recommend_items(title, cosine_sim=cosine_sim):
     # Convert input title to lowercase
@@ -134,7 +95,7 @@ def recommend_items(title, cosine_sim=cosine_sim):
     item_indices = [i[0] for i in sim_scores]
 
     # Return the top 10 most similar items
-    return books_df_subset['title'].iloc[item_indices]
+    return books_df_processed['title'].iloc[item_indices]
 
 
 print(recommend_items('Festive in Death (In Death, #39)'))
