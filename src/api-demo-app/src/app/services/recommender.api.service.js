@@ -1,14 +1,18 @@
-async function getBookRecommendations(title) {
+async function getBookRecommendations(title, model='tf-idf') {
     try {
         const response = await fetch('http://localhost:5000/predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ title: title})
+            body: JSON.stringify({ title: title, model: model})
         });
         const data = await response.json();
         console.log(data.prediction);
+
+        if(data.error) {
+            throw data.error
+        }
 
         return data.prediction;
     } catch (error) {
