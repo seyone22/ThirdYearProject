@@ -1,6 +1,6 @@
 import pandas as pd
 from ast import literal_eval
-from model.components.featureExtractors.feature_extractor_tf_idf import FeatureExtractor
+from model.components.featureExtractors.feature_extractor_distilbert import FeatureExtractor
 from model.components.preprocessors.data_preprocessor_v2 import DataPreprocessor
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -38,13 +38,9 @@ cosine_sim = cosine_similarity(composite_feature_vector)
 print('Similarity Measure generation complete.\n')
 
 
-def recommend_items(title, similarity_measure=cosine_sim):
+def recommend_items(title, similarity_measure=cosine_sim, fuzzy=False):
     # Convert input title to lowercase
     title = title.lower()
-
-    # Check if the book is in the database
-    if title not in indices:
-        return {'error': f'Title "{title} not found in the dataset.'}
 
     # Get the index of the item that matches the title
     idx = indices[title]
