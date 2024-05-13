@@ -32,6 +32,6 @@ class FeatureExtractor:
 
         # Combine document embeddings with other features
         ##language_features = pd.get_dummies(books_df_processed['language_code']).values
-        composite_feature_vector = np.hstack([document_embeddings])
+        composite_feature_vector = np.vstack([document_embeddings])
 
         return composite_feature_vector
