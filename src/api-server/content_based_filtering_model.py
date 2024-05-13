@@ -16,7 +16,8 @@ from ast import literal_eval
 pd.options.display.float_format = '{:.2f}'.format
 
 # Import data from the goodbooks-10k repo
-books_df = pd.read_csv('https://raw.githubusercontent.com/malcolmosh/goodbooks-10k/master/books_enriched.csv', index_col=[0], converters={"genres": literal_eval})
+books_df = pd.read_csv('https://raw.githubusercontent.com/malcolmosh/goodbooks-10k/master/books_enriched.csv',
+                       index_col=[0], converters={"genres": literal_eval})
 books_ratings = pd.read_csv('https://raw.githubusercontent.com/malcolmosh/goodbooks-10k/master/ratings.csv')
 
 # Display three entries
@@ -29,8 +30,6 @@ non_list_entries = books_df[~books_df['genres'].apply(lambda x: isinstance(x, li
 print(non_list_entries[['title', 'genres']])
 
 print(books_df['title'].sample(10))
-
-
 
 """# Preprocessing
 
@@ -47,7 +46,7 @@ We're going to keep the following columns.
 
 # Columns of the dataset we are interested in for this model
 columns_to_keep = \
-  ['authors', 'average_rating', 'genres', 'language_code', 'title', 'description']
+    ['authors', 'average_rating', 'genres', 'language_code', 'title', 'description']
 
 # Subset of the dataset with only the above columns
 books_df_subset = books_df[columns_to_keep]
@@ -62,6 +61,7 @@ books_df_subset['description'] = books_df_subset['description'].fillna('')
 
 # Remove NaNs from the original_title column
 books_df_subset['title'] = books_df_subset['title'].fillna('')
+books_df_subset['title'] = books_df_subset['title'].str.lower()
 
 """# Feature Extraction"""
 
@@ -74,7 +74,7 @@ hasher = FeatureHasher(n_features=count_of_unique_authors, input_type='string')
 mlb = MultiLabelBinarizer()
 
 # Hash the authors
-#author_features = hasher.transform(books_df_subset['author'])
+# author_features = hasher.transform(books_df_subset['author'])
 
 # Binarize the genres column
 binarized_genres = mlb.fit_transform(books_df_subset['genres'])
@@ -83,7 +83,7 @@ binarized_genres = mlb.fit_transform(books_df_subset['genres'])
 books_df_subset = pd.get_dummies(books_df_subset, columns=['language_code'])
 
 # Vectorize the title column
-title_features  = vectorizer.fit_transform(books_df_subset['title'])
+title_features = vectorizer.fit_transform(books_df_subset['title'])
 
 # Vectorize the description column
 description_features = vectorizer.fit_transform(books_df_subset['description'])
@@ -99,6 +99,7 @@ composite_feature_vector = hstack([binarized_genres, title_features, description
 """
 
 from sklearn.metrics.pairwise import cosine_similarity
+
 cosine_sim = cosine_similarity(composite_feature_vector)
 
 """### Euclidean Distance
@@ -112,11 +113,15 @@ cosine_sim = cosine_similarity(composite_feature_vector)
 
 indices = pd.Series(books_df_subset.index, index=books_df_subset['title']).drop_duplicates()
 
+
 def recommend_items(title, cosine_sim=cosine_sim):
+    # Convert input title to lowercase
+    title = title.lower()
+
     # Get the index of the item that matches the title
     idx = indices[title]
 
-    # Get the pairwsie similarity scores of all items with that item
+    # Get the pairwise similarity scores of all items with that item
     sim_scores = list(enumerate(cosine_sim[idx]))
 
     # Sort the items based on the similarity scores
@@ -131,5 +136,5 @@ def recommend_items(title, cosine_sim=cosine_sim):
     # Return the top 10 most similar items
     return books_df_subset['title'].iloc[item_indices]
 
-print(recommend_items('Festive in Death (In Death, #39)'))
 
+print(recommend_items('Festive in Death (In Death, #39)'))
