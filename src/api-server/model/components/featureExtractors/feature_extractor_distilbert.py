@@ -13,21 +13,25 @@ class FeatureExtractor:
         document_embeddings = []
         for author, title, desc, genres in zip(books_df_processed['author'], books_df_processed['title'],
                                                books_df_processed['description'], books_df_processed['genres']):
-            # Tokenize and process author, title, and description separately
-            author_tokens = self.tokenizer(author, padding=True, truncation=True, return_tensors="tf")
-            title_tokens = self.tokenizer(title, padding=True, truncation=True, return_tensors="tf")
-            desc_tokens = self.tokenizer(desc, padding=True, truncation=True, return_tensors="tf")
+            # Concatenate author, title, and description
+            input_text = author + ' ' + title + ' ' + desc
+            genre_text = ' '.join(genres)
+            input_text = input_text + ' ' + genre_text
 
-            # Tokenize and process each genre separately
-            genre_tokens_list = [self.tokenizer(genre, padding=True, truncation=True, return_tensors="tf")
-                                 for genre in genres]
+            # Tokenize input text
+            inputs = self.tokenizer(input_text, padding=True, truncation=True, return_tensors="tf")
 
-            # Concatenate embeddings
-            embeddings_list = [self.model(tokens).last_hidden_state for tokens in
-                               [author_tokens, title_tokens, desc_tokens] + genre_tokens_list]
-            combined_embedding = tf.reduce_mean(tf.concat(embeddings_list, axis=1), axis=1)
+            # Forward pass through BERT model
+            outputs = self.model(inputs)
 
-            document_embeddings.append(combined_embedding.numpy())
+            # Extract embeddings
+            last_hidden_states = outputs.last_hidden_state
+            # You can choose to use the embedding of the [CLS] token or pool the embeddings to get a single vector
+            pooled_embedding = tf.reduce_mean(last_hidden_states, axis=1)
+            document_embeddings.append(pooled_embedding.numpy())
 
-        composite_feature_vector = np.hstack(document_embeddings)
+        # Combine document embeddings with other features
+        ##language_features = pd.get_dummies(books_df_processed['language_code']).values
+        composite_feature_vector = np.hstack([document_embeddings])
+
         return composite_feature_vector

@@ -11,4 +11,4 @@ sys.path.append(parent_dir)
 from content_based_filtering_model import recommend_items
 
 # Dump the function to a joblib file
-dump(recommend_items, 'model.joblib')
+dump(recommend_items, 'model-tf-idf.joblib')

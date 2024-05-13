@@ -12,7 +12,7 @@ Original file is located at
 import pandas as pd
 from ast import literal_eval
 
-from model.components.featureExtractors.feature_extractor_distilbert import FeatureExtractor
+from model.components.featureExtractors.feature_extractor_tf_idf import FeatureExtractor
 from model.components.preprocessors.data_preprocessor_v2 import DataPreprocessor
 
 # Set the float format
