@@ -1,4 +1,4 @@
-async function getBookRecommendations(title, model='tf-idf') {
+async function getBookRecommendations(title, model='fuzzy-tf-idf') {
     try {
         const response = await fetch('http://localhost:5000/predict', {
             method: 'POST',
