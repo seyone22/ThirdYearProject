@@ -15,5 +15,3 @@ src/data/slnb
 
 # Ignore other files
 *.pyc
-src/api-server/__pycache__/app.cpython-311.pyc
-src/api-server/__pycache__/content_based_filtering_model.cpython-311.pyc
