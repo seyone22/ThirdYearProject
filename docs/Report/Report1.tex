@@ -152,11 +152,185 @@ By implementing these methodologies, we aim to develop a robust and user-friendl
 % Your design content goes here
 
 \section{Development}
-% Your development content goes here
 
-\section{Testing}
-% Your testing content goes here
-%need to add screenshots or video of testing
+\subsection{Introduction (Our Initial Scope)}
+
+In our initial proposal, we aimed to develop a comprehensive book recommendation system with three main components:
+\begin{enumerate}
+    \item An API server that hosts the recommender model.
+    \item A test application to showcase the model's capabilities.
+    \item A structured dataset of books for training and evaluation.
+\end{enumerate}
+This section recaps our initial objectives and the scope of the project as presented in our first proposal.
+
+\subsection{Results (Finished Scope)}
+
+We explored various AI/ML techniques to provide accurate book recommendations. After thorough experimentation, we settled on a combination of models to deliver the best results. The key outcomes are:
+\begin{itemize}
+    \item A robust model server that hosts our recommender system.
+    \item A demo application demonstrating the recommendation capabilities.
+    \item A sample real-world application for a bookstore, integrating our recommendation system.
+\end{itemize}
+However, we faced challenges in handling the data, which limited our ability to accomplish all our goals.
+
+\subsection{What We Didn't Do (Unfinished Tasks)}
+
+While we made significant progress, there were several tasks we couldn't complete:
+\begin{itemize}
+    \item Comprehensive testing of the recommender system.
+    \item Converting the dataset from the SLNB to a suitable AI dataset.
+    \item Implementing a seamless data handling pipeline.
+\end{itemize}
+These shortcomings are primarily due to the complexity and time required for these tasks.
+
+\subsection{Why We Didn't Do It (Issues Faced)}
+
+Despite our best efforts, certain obstacles hindered our progress:
+\begin{itemize}
+    \item The conversion of the dataset from SLNB format to an AI-compatible format was more challenging than anticipated. We tried several methods, including manual extraction, automated scripts, and third-party tools, but each approach had its own set of issues, such as data inconsistency and integration difficulties.
+    \item Limited resources and time constraints prevented us from conducting extensive testing. We implemented basic tests but couldn't cover all edge cases and scenarios.
+    \item Integrating diverse data sources into a cohesive dataset proved to be complex, leading to delays and integration issues.
+\end{itemize}
+These challenges highlighted the need for more robust data handling and preprocessing strategies.
+
+\subsection{Implementation Details (How We Did It)}
+
+Our implementation process involved several key steps:
+\begin{enumerate}
+    \item \textbf{AI Modeling:}
+    \begin{itemize}
+        \item We experimented with three different feature extraction models: TF-IDF, BERT, and Word2Vec. TF-IDF yielded the best results, while BERT presented performance issues and Word2Vec was primarily effective for string matches.
+    \end{itemize}
+    \item \textbf{Demo App:}
+    \begin{itemize}
+        \item A Flask-based API server (\texttt{app.py}) was developed to serve the recommendation model. The model, pre-trained and saved using \texttt{joblib}, is loaded at runtime.
+    \end{itemize}
+    \item \textbf{Bookshop App:}
+    \begin{itemize}
+        \item We integrated the recommendation system into a sample bookstore application, providing users with personalized book suggestions.
+    \end{itemize}
+    \item \textbf{Packaging \& Deployment:}
+    \begin{itemize}
+        \item The system was packaged using virtual environments to manage dependencies and prevent version conflicts.
+    \end{itemize}
+    \item \textbf{Testing and Statistics:}
+    \begin{itemize}
+        \item Basic tests were conducted to ensure the functionality of API routes, error handling, and model predictions.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Application Demo (Guided Tour of the API and Services)}
+
+In this section, we provide a guided tour of our system, highlighting the polished parts and showcasing the functionality.
+
+\subsubsection{Intro}
+
+We proposed three main components:
+\begin{enumerate}
+    \item An API server containing the recommender model.
+    \item A test app to showcase the model.
+    \item A structured book dataset.
+\end{enumerate}
+
+\subsubsection{AI Modeling}
+
+\textbf{Content-based Filtering Model:}
+\begin{enumerate}
+    \item \textbf{Data Preprocessing:}
+    \begin{itemize}
+        \item Loaded book data from the goodbooks-10k repository.
+        \item Selected relevant columns: authors, average rating, genres, language code, title, and description.
+        \item Handled missing values in description and title columns.
+    \end{itemize}
+    \item \textbf{Feature Extraction:}
+    \begin{itemize}
+        \item Used TF-IDF vectorization for title and description columns.
+        \item Binarized genres using MultiLabelBinarizer.
+        \item One-hot encoded the language code column.
+    \end{itemize}
+    \item \textbf{Similarity Calculation:}
+    \begin{itemize}
+        \item Computed cosine similarity between composite feature vectors.
+    \end{itemize}
+    \item \textbf{Recommendation Function:}
+    \begin{itemize}
+        \item The \texttt{recommend\_items} function returns the top 10 similar book titles based on cosine similarity.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Demo App}
+
+\textbf{Flask Application:}
+\begin{itemize}
+    \item Created an API endpoint at \texttt{/predict} for POST requests with a JSON payload containing a book title.
+    \item The model is loaded from \texttt{model.joblib}, and predictions are returned as a JSON response.
+\end{itemize}
+
+\subsubsection{Bookshop App}
+
+\textbf{Implementation Pipeline:}
+\begin{itemize}
+    \item Import Data $\rightarrow$ Analyze Data $\rightarrow$ Preprocessing $\rightarrow$ Feature Extraction $\rightarrow$ Similarity Measures $\rightarrow$ Final Model
+    \item Focused on preprocessing, feature extraction, and similarity measures.
+\end{itemize}
+
+\subsubsection{Packaging \& Deployment}
+
+\textbf{Virtual Environments:}
+\begin{itemize}
+    \item Managed package versions and dependencies using virtual environments.
+\end{itemize}
+
+\subsubsection{Testing and Statistics}
+
+\textbf{Tests Conducted:}
+\begin{itemize}
+    \item Verified API route functionality.
+    \item Checked for descriptive error messages.
+    \item Ensured accurate model predictions.
+\end{itemize}
+
+\subsubsection{Feature Extraction Models}
+
+\textbf{Three Feature Extractors:}
+\begin{enumerate}
+    \item \textbf{feature\_extractor\_distilbert.py:}
+    \begin{itemize}
+        \item Uses DistilBERT for document embeddings.
+        \item Combines document embeddings with genres.
+    \end{itemize}
+    \item \textbf{feature\_extractor\_tf\_idf.py:}
+    \begin{itemize}
+        \item Uses TF-IDF for title and description columns.
+        \item Binarizes genres and one-hot encodes language codes.
+    \end{itemize}
+    \item \textbf{feature\_extractor\_word2vec.py:}
+    \begin{itemize}
+        \item Trains Word2Vec on tokenized text.
+        \item Combines word embeddings with other features.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Preprocessor Classes}
+
+\textbf{DataPreprocessor:}
+\begin{itemize}
+    \item Selects columns of interest and preprocesses book data.
+\end{itemize}
+
+\textbf{KerasPreprocessor:}
+\begin{itemize}
+    \item Prepares book titles for Keras models.
+\end{itemize}
+
+\subsubsection{Tokenization}
+
+\textbf{Notebooks:}
+\begin{itemize}
+    \item \texttt{data\_exploration.ipynb:} Explores tokenization-related data.
+    \item \texttt{ELMO.ipynb:} Covers ELMo embeddings and contextual word representations.
+\end{itemize}
+
 
 \section{Maintenance and Support}
 
