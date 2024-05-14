@@ -1,0 +1,71 @@
+Development was split into three phases. Namely,
+\begin{itemize}
+    \item API Creation
+    \item Demo Application Creation
+    \item Testing \& Integration
+\end{itemize}
+
+\subsubsection{API Creation}
+We chose to run our API on Flask, for it's performance and ease of use. Since we simply needed to deploy the model and have a few routes to describe the functionalities of the API, and to serve the models, we felt that a micro-framework like Flask would be the best.
+
+The API contains the following routes.
+\begin{itemize}[label={}]
+    \item \texttt{/predict}
+    \item \texttt{/models}
+\end{itemize}
+
+\texttt{/predict} is a HTTP POST endpoint, and is used to serve the Recommender models themselves. This accepts two parameters, \texttt{title}, and \texttt{model}. \texttt{Title} is the name of the book for which we want recommendations. \texttt{Model} gives shorthand for the various models able to be served by this API. For now, we can serve \texttt{distilbert}, \texttt{distilbert\_v2}, \texttt{bert}, \texttt{tf\_idf}, and \texttt{word2vec} models.
+
+\texttt{/models} is a HTTP GET endpoint, and simply returns a list of available models that can be used by the client to request recommendations.
+
+\subsubsection*{Recommender Models}
+We tried various approaches in creating the recommender models. First, we tried traditional ML techniques to create a model that can recommend books based on simiarities in content to other books. Our first model, \texttt{tf\_idf}, ended up being our most stable and useful model.
+
+\subsubsection*{TF-IDF}
+\texttt{tf\_idf} utilizes Term Frequency - Inverse Document Frequency to generate vector embeddings for the various fields used to compare books. Term Frequency-Inverse Document Frequency (TF-IDF) is a numerical statistic used in information retrieval and text mining to reflect the importance of a term in a document relative to a collection of documents (corpus). It is commonly used as a weighting factor in various text analysis tasks such as document classification, information retrieval, and text similarity calculation. In this case, we utilized TF-IDF to generate embeddings for the book titles and descriptions. This model also processes language codes, genres, and author data, but utilizes different methodologies to convert this data into embeddings. For genres, we use Multi-Label Binarization, and a hashing algorithm to compute embeddings for the author field. The libraries implementing these algorithtms were taken from \texttt{sklearn}.
+
+For this model, we utilized Cosine Similarity as our measure of similarity, as it provided the best recommendations as per (limited) user testing. Given below is the feature extraction portion of the TF-IDF Model.
+
+\begin{lstlisting}[language=Python, caption={Feature Extraction using traditional ML}, label={lst:example}, linewidth=\linewidth, breaklines=true]
+    class FeatureExtractor:
+    def extract_features(self, books_df_processed):
+        vectorizer = TfidfVectorizer()
+
+        # Count of unique authors
+        count_of_unique_authors = books_df_processed['author'].nunique()
+
+        hasher = FeatureHasher(n_features=count_of_unique_authors, input_type='string')
+        mlb = MultiLabelBinarizer()
+
+        # Hash the authors
+        # author_features = hasher.transform(books_df_subset['author'])
+
+        # Binarize the genres column
+        binarized_genres = mlb.fit_transform(books_df_processed['genres'])
+
+        # One-hot encode the language_code
+        books_df_subset = pd.get_dummies(books_df_processed, columns=['language_code'])
+
+        # Vectorize the title column
+        title_features = vectorizer.fit_transform(books_df_subset['title'])
+
+        # Vectorize the description column
+        description_features = vectorizer.fit_transform(books_df_subset['description'])
+
+        # Composite feature Vector
+        composite_feature_vector = hstack([binarized_genres, title_features, description_features])
+
+        return composite_feature_vector
+\end{lstlisting}
+
+* Note that the Author embeddings are suppressed in this code, and it is supressed from the model because the data in the original dataset is not clean enough, which resulted in improper recommendations when using that column.
+
+\subsubsection*{Bert \& DistilBert}
+BERT is a language model based on the transformer architecture, released in 2018 by researchers at Google. We intended to use BERT for generating embeddings for the data, as transformer based pre-trained models provide significant advantages over traditional ML methodologies for extracting richer relationships between text tokens.
+
+While this was the idea in theory, we were unable to actually train any of the BERT based models, as the hardware available to us was not sufficient to train the model in any reasonable length of time. The best machine available at our disposal was a laptop equipped with an AMD Rzyen 9 6900HX processor, 16 Gigabytes of RAM, and a AMD Radeon 6700S GPU. BERT / DISTILIBERT is not optimized for the AMD arrchitecture, and caused massive issues during training.
+
+\subsubsection*{Word2Vec}
+Word2Vec is another traditional ML approach to generating embeddings. We used Word2Vec on all the available fields (title, description, author, genres), and the result was not satisfactory. The resultant model produced matches that simply matched strings within the other titles, and thus did not capture any semantic meaning behind the words themselves.
+
+We left the model in the system, for testing and evaluation purposes.
