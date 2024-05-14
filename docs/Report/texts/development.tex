@@ -6,7 +6,10 @@ Development was split into three phases. Namely,
 \end{itemize}
 
 \subsubsection{API Creation}
-We chose to run our API on Flask, for it's performance and ease of use. Since we simply needed to deploy the model and have a few routes to describe the functionalities of the API, and to serve the models, we felt that a micro-framework like Flask would be the best.
+We chose to run our API on Flask, for it's performance and ease of use. Since
+we simply needed to deploy the model and have a few routes to describe the
+functionalities of the API, and to serve the models, we felt that a
+micro-framework like Flask would be the best.
 
 The API contains the following routes.
 \begin{itemize}[label={}]
@@ -24,7 +27,9 @@ We tried various approaches in creating the recommender models. First, we tried 
 \subsubsection*{TF-IDF}
 \texttt{tf\_idf} utilizes Term Frequency - Inverse Document Frequency to generate vector embeddings for the various fields used to compare books. Term Frequency-Inverse Document Frequency (TF-IDF) is a numerical statistic used in information retrieval and text mining to reflect the importance of a term in a document relative to a collection of documents (corpus). It is commonly used as a weighting factor in various text analysis tasks such as document classification, information retrieval, and text similarity calculation. In this case, we utilized TF-IDF to generate embeddings for the book titles and descriptions. This model also processes language codes, genres, and author data, but utilizes different methodologies to convert this data into embeddings. For genres, we use Multi-Label Binarization, and a hashing algorithm to compute embeddings for the author field. The libraries implementing these algorithtms were taken from \texttt{sklearn}.
 
-For this model, we utilized Cosine Similarity as our measure of similarity, as it provided the best recommendations as per (limited) user testing. Given below is the feature extraction portion of the TF-IDF Model.
+For this model, we utilized Cosine Similarity as our measure of similarity, as
+it provided the best recommendations as per (limited) user testing. Given below
+is the feature extraction portion of the TF-IDF Model.
 
 \begin{lstlisting}[language=Python, caption={Feature Extraction using traditional ML}, label={lst:example}, linewidth=\linewidth, breaklines=true]
     class FeatureExtractor:
@@ -63,9 +68,96 @@ For this model, we utilized Cosine Similarity as our measure of similarity, as i
 \subsubsection*{Bert \& DistilBert}
 BERT is a language model based on the transformer architecture, released in 2018 by researchers at Google. We intended to use BERT for generating embeddings for the data, as transformer based pre-trained models provide significant advantages over traditional ML methodologies for extracting richer relationships between text tokens.
 
-While this was the idea in theory, we were unable to actually train any of the BERT based models, as the hardware available to us was not sufficient to train the model in any reasonable length of time. The best machine available at our disposal was a laptop equipped with an AMD Rzyen 9 6900HX processor, 16 Gigabytes of RAM, and a AMD Radeon 6700S GPU. BERT / DISTILIBERT is not optimized for the AMD arrchitecture, and caused massive issues during training.
+DistilBert is a newer model released by Google that is 40\% smaller than Bert, yet provides 95\% of it's functionality. We were able to get a rudimentary model based on DistilBert running once, but without all the parameters it was ultimately useless.
+
+While this was the idea in theory, we were unable to actually train any of the
+BERT based models, as the hardware available to us was not sufficient to train
+the model in any reasonable length of time. The best machine available at our
+disposal was a laptop equipped with an AMD Rzyen 9 6900HX processor, 16
+Gigabytes of RAM, and a AMD Radeon 6700S GPU. BERT / DISTILIBERT is not
+optimized for the AMD arrchitecture, and caused massive issues during training.
+
+\begin{lstlisting}[language=Python, caption={Feature Extraction using DistilBert}, label={lst:example}, linewidth=\linewidth, breaklines=true]
+    class FeatureExtractor:
+    def __init__(self, model_name="distilbert-base-uncased"):
+        self.tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+        self.model = TFDistilBertModel.from_pretrained(model_name)
+
+    def extract_features(self, books_df_processed):
+        document_embeddings = []
+        for author, title, desc, genres in zip(books_df_processed['author'], books_df_processed['title'],
+                                               books_df_processed['description'], books_df_processed['genres']):
+            # Concatenate author, title, and description
+            input_text = author + ' ' + title + ' ' + desc
+            genre_text = ' '.join(genres)
+            input_text = input_text + ' ' + genre_text
+
+            # Tokenize input text
+            inputs = self.tokenizer(input_text, padding=True, truncation=True, return_tensors="tf")
+
+            # Forward pass through BERT model
+            outputs = self.model(inputs)
+
+            # Extract embeddings
+            last_hidden_states = outputs.last_hidden_state
+            # You can choose to use the embedding of the [CLS] token or pool the embeddings to get a single vector
+            pooled_embedding = tf.reduce_mean(last_hidden_states, axis=1)
+            document_embeddings.append(pooled_embedding.numpy())
+
+        # Combine document embeddings with other features
+        ##language_features = pd.get_dummies(books_df_processed['language_code']).values
+        composite_feature_vector = np.vstack([document_embeddings])
+
+        return composite_feature_vector
+\end{lstlisting}
+
+Note that distilbert and distilbert\_v2 are two seperate models. In v2, we are capturing the embeddings seperately for each field, and then combining them together during model formation. In the original model, we concatenate all the fields into one string, and use that to train the model. We feel that v2 should have better performance across the board, but are unable to test it due to hardware limitations.
 
 \subsubsection*{Word2Vec}
 Word2Vec is another traditional ML approach to generating embeddings. We used Word2Vec on all the available fields (title, description, author, genres), and the result was not satisfactory. The resultant model produced matches that simply matched strings within the other titles, and thus did not capture any semantic meaning behind the words themselves.
 
 We left the model in the system, for testing and evaluation purposes.
+
+\begin{lstlisting}[language=Python, caption={Feature Extraction using traditional Word2Vec}, label={lst:example}, linewidth=\linewidth, breaklines=true]
+    class FeatureExtractor:
+    def __init__(self):
+        self.word2vec_model = None
+
+    def train_word2vec_model(self, books_df_processed):
+        # Tokenize text (title and description) into words
+        tokenized_text = [word_tokenize(title + ' ' + desc) for title, desc in
+                          zip(books_df_processed['title'], books_df_processed['description'])]
+
+        # Train Word2Vec model
+        self.word2vec_model = Word2Vec(sentences=tokenized_text, vector_size=100, window=5, min_count=1, workers=4)
+
+    def extract_features(self, books_df_processed):
+        if self.word2vec_model is None:
+            self.train_word2vec_model(books_df_processed)
+
+        # Generate document embeddings using Word2Vec
+        document_embeddings = []
+        for title, desc in zip(books_df_processed['title'], books_df_processed['description']):
+            tokenized_title = word_tokenize(title)
+            tokenized_desc = word_tokenize(desc)
+            title_embedding = np.mean(
+                [self.word2vec_model.wv.get_vector(word) for word in tokenized_title if word in self.word2vec_model.wv],
+                axis=0)
+            desc_embedding = np.mean(
+                [self.word2vec_model.wv.get_vector(word) for word in tokenized_desc if word in self.word2vec_model.wv],
+                axis=0)
+            document_embeddings.append(title_embedding)
+
+        # Binarize the genres column
+        mlb = MultiLabelBinarizer()
+        binarized_genres = mlb.fit_transform(books_df_processed['genres'])
+
+        # One-hot encode the language_code
+        books_df_subset = pd.get_dummies(books_df_processed, columns=['language_code'])
+
+        # Combine document embeddings with other features
+        composite_feature_vector = np.hstack([binarized_genres, document_embeddings,
+                                              books_df_subset.drop(columns=['genres', 'title', 'description']).values])
+
+        return composite_feature_vector
+\end{lstlisting}
