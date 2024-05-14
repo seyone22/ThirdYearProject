@@ -2,7 +2,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction import FeatureHasher
 from sklearn.preprocessing import MultiLabelBinarizer
 import pandas as pd
-
+from scipy.sparse import hstack
 
 class FeatureExtractor:
     def extract_features(self, books_df_processed):
@@ -28,8 +28,6 @@ class FeatureExtractor:
 
         # Vectorize the description column
         description_features = vectorizer.fit_transform(books_df_subset['description'])
-
-        from scipy.sparse import hstack
 
         # Composite feature Vector
         composite_feature_vector = hstack([binarized_genres, title_features, description_features])
