@@ -4,22 +4,27 @@ Testing was performed mostly manually, and divided up into three parts. First, t
 
 The API was tested rigorously using Postman to perform testing. A new workspace was created, and the local testing deployment on port 5000 was tested. Primarily, the behaviour of the API when as it handles expected and unexpected input data was analyzed.
 
+NOTE: All the testing was done in a development environment, and no testing was done on a production server due to finanical constraints of the team, and time contraints.
+\\\\
+
 \noindent
 \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
     \hline
     \textbf{Test Case ID:} & TC001 \\ \hline
-    \textbf{Title:} & Validate \texttt{} \\ \hline
-    \textbf{Precondition:} & The book dataset is loaded and the recommendation model is deployed. \\ \hline
-    \textbf{Assumption:} & User provides a valid book title available in the dataset. \\ \hline
+    \textbf{Title:} & Validate \texttt{/predict route} \\ \hline
+    \textbf{Precondition:} & The book dataset is loaded, the model is trained and dumped, the server is running and the recommendation model is deployed on port 5000. \\ \hline
+    \textbf{Assumption:} & User submits a HTTP POST request to the \texttt{/predict} endpoint, from localhost. \\ \hline
 \end{tabularx}
 
 \noindent
 \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|X|}
     \hline
     \textbf{Number of Test Cases} & \textbf{Sub Test Case} & \textbf{Description and Expected Results} \\ \hline
-    1 & TC001-1 & Input a valid book title and expect the system to return the top 10 recommended books. \\ \hline
-    2 & TC001-2 & Input a book title with slight typos and expect the system to return the top 10 recommended books, handling the typo gracefully. \\ \hline
-    3 & TC001-3 & Input a book title not present in the dataset and expect the system to handle it with an appropriate error message. \\ \hline
+    1 & TC001-1 & Input a valid book title and model name and expect the system to return the top 10 recommended books. \\ \hline
+    2 & TC001-2 & Input only a valid book title, expects the API to return a descriptive error message. \\ \hline
+    3 & TC001-3 & Inputs only a invalid book title, expects the API to return recommendations for the closest match \\ \hline
+    4 & TC001-4 & Inputs a valid book title and invalid model name, expects the API to return a descriptive error message \\ \hline
+    5 & TC001-4 & Inputs a valid book title and valid model name and some other junk data, expects the API to return a list of recommended books \\ \hline
 \end{tabularx}
 
 \noindent
@@ -27,9 +32,11 @@ The API was tested rigorously using Postman to perform testing. A new workspace 
     \hline
     \textbf{Expected Result:} & 
     \begin{itemize}
-        \item TC001-1: The system should return a list of 10 recommended books related to the input title.
-        \item TC001-2: The system should return a list of 10 recommended books, accounting for the typo in the input.
-        \item TC001-3: The system should display an error message indicating the book title is not found.
+        \item TC001-1: The system should return a 201 output list of 10 recommended books related to the input title.
+        \item TC001-2: The system should return a 404 JSON output with data \texttt{error: Book not found!}
+        \item TC001-3: The system should return a 201 output list of 10 recommended books related to the input title.
+        \item TC001-4: The system should return a 300 JSON output with data \texttt{error: Invalid model!}
+        \item TC001-5: The system should return a 201 output list of 10 recommended books related to the input title, ignoring the other data.
     \end{itemize}
     \\ \hline
 \end{tabularx}
@@ -40,8 +47,10 @@ The API was tested rigorously using Postman to perform testing. A new workspace 
     \textbf{Actual Result:} & 
     \begin{itemize}
         \item TC001-1: The system returned the correct list of 10 recommended books.
-        \item TC001-2: The system handled the typo and returned relevant recommendations.
+        \item TC001-2: The system displayed the appropriate error message
         \item TC001-3: The system displayed an appropriate error message.
+        \item TC001-4: The system returned the appropriate error message
+        \item TC001-5: The system returned the list of 10 recommendations.
     \end{itemize}
     \\ \hline
 \end{tabularx}
