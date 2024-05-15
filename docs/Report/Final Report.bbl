@@ -1,0 +1,83 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Baker%
+\ \protect \BOthers {.}}{%
+Baker%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2022}}%
+}]{%
+baker2022video}
+\APACinsertmetastar {%
+baker2022video}%
+\begin{APACrefauthors}%
+Baker, B.%
+, Akkaya, I.%
+, Zhokhov, P.%
+, Huizinga, J.%
+, Tang, J.%
+, Ecoffet, A.%
+\BDBL {}Clune, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2022}{Jun}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Video PreTraining (VPT): Learning to Act by Watching Unlabeled Online Videos} {Video pretraining (vpt): Learning to act by watching unlabeled online videos}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{arXiv preprint arXiv:2206.11795}{}{}{}.
+\newblock
+\begin{APACrefURL} \url{https://arxiv.org/abs/2206.11795} \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.48550/arXiv.2206.11795} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Osh%
+}{%
+Osh%
+}{%
+{\protect \APACyear {2024}}%
+}]{%
+goodbooks-10k-extended}
+\APACinsertmetastar {%
+goodbooks-10k-extended}%
+\begin{APACrefauthors}%
+Osh, M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{}{}.
+\newblock
+\APACrefbtitle {Goodbooks-10k-Extended.} {Goodbooks-10k-extended.}
+\newblock
+\APAChowpublished {\url{https://github.com/malcolmosh/goodbooks-10k-extended.git}}.
+\newblock
+\APACrefnote{Accessed: 2024}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+{Sri Lanka National Library}%
+}{%
+{Sri Lanka National Library}%
+}{%
+{\protect \APACyear {2000--2022}}%
+}]{%
+sri_lanka_national_bibliography}
+\APACinsertmetastar {%
+sri_lanka_national_bibliography}%
+\begin{APACrefauthors}%
+{Sri Lanka National Library}.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2000--2022}{}{}.
+\newblock
+\APACrefbtitle {Sri Lanka National Bibliography.} {Sri lanka national bibliography.}
+\newblock
+\APACaddressPublisher{}{Sri Lanka National Library}.
+\newblock
+\APACrefnote{Accessed: 2023}
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}
