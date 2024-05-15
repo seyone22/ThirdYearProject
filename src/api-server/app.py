@@ -41,20 +41,6 @@ def get_available_models():
     else:
         return {'models': list(models.keys())}
 
-
-@app.route('/search', methods=['POST'])
-def search_books():
-    data = request.get_json()
-    if not data:
-        return {'error': 'Invalid or malformed request'}, 400
-    if 'search-term' not in data:
-        return {'error': 'No search term provided'}, 400
-    if data['search-term'] is '':
-        return {'error': 'Empty search string'}, 400
-
-
-
-
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
