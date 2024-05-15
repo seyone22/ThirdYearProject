@@ -131,6 +131,9 @@ Word2Vec is another traditional ML approach to generating embeddings. We used Wo
 
 We left the model in the system, for testing and evaluation purposes.
 
+\subsubsection*{Collaborative filtering model}
+We've designed a collaborative filtering model to use BERT and the ratings dataset from goodbooks-10k, but as we don't have very may good datapoints for user preferences, we are ommitting this step from the final pipeline. As we get more and more user data, and as we get better hardware to evaluate BERT based models, we will be able to incorporate collaborative filtering as well into our toal recommender algorithm.
+
 \begin{lstlisting}[language=Python, caption={Feature Extraction using traditional Word2Vec}, label={lst:example}, linewidth=\linewidth, breaklines=true]
     class FeatureExtractor:
     def __init__(self):
