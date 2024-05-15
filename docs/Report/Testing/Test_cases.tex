@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{Test Case Documentation}
+
+\begin{document}
+
+\maketitle
+
+\section*{Test Case Chart}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Test Case ID:} & TC001 \\ \hline
+    \textbf{Title:} & Validate Book Recommendation Functionality \\ \hline
+    \textbf{Precondition:} & The book dataset is loaded and the recommendation model is deployed. \\ \hline
+    \textbf{Assumption:} & User provides a valid book title available in the dataset. \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|X|}
+    \hline
+    \textbf{Number of Test Cases} & \textbf{Sub Test Case} & \textbf{Description and Expected Results} \\ \hline
+    1 & TC001-1 & Input a valid book title and expect the system to return the top 10 recommended books. \\ \hline
+    2 & TC001-2 & Input a book title with slight typos and expect the system to return the top 10 recommended books, handling the typo gracefully. \\ \hline
+    3 & TC001-3 & Input a book title not present in the dataset and expect the system to handle it with an appropriate error message. \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Expected Result:} & 
+    \begin{itemize}
+        \item TC001-1: The system should return a list of 10 recommended books related to the input title.
+        \item TC001-2: The system should return a list of 10 recommended books, accounting for the typo in the input.
+        \item TC001-3: The system should display an error message indicating the book title is not found.
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Actual Result:} & 
+    \begin{itemize}
+        \item TC001-1: The system returned the correct list of 10 recommended books.
+        \item TC001-2: The system handled the typo and returned relevant recommendations.
+        \item TC001-3: The system displayed an appropriate error message.
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Actual Output:} & 
+    \begin{itemize}
+        \item TC001-1: [List of 10 recommended books]
+        \item TC001-2: [List of 10 recommended books with typo handling]
+        \item TC001-3: "Error: Book title not found."
+    \end{itemize}
+    \\ \hline
+    \textbf{Pass/Fail:} & 
+    \begin{itemize}
+        \item TC001-1: Pass
+        \item TC001-2: Pass
+        \item TC001-3: Pass
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\end{document}
