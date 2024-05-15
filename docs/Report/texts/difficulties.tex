@@ -27,3 +27,13 @@ The technique proposed by OpenAI leverages a structured dataset which is used to
 
 A large scale orchestrated effort to parse this data into a machine readable format would prove useful for further research into LLMs and Deep Neural networks which can parse and understand Sinhala and Tamil languages, but is beyond the scope of this project at this time.
 
+While our initial goal was to extract this data and store it in a immutable datastore like Blockchain or IPFS, we were ultimately unable to do so due to the aforementioned issues with data extraction. We hope that our work so far will prove useful to researchers and developers in the future hoping to work on this same matter.
+
+Further, we faced a plethora of issues when it comes to collaboration. Due to our relative inexperience with Git, managing the various branches, tracking, and updating them, and merging changes was handled haphazardly. The availability of \texttt{git cherry-pick} was sadly realized a very late stage in the project, and this caused a few members contributions to not be recorded in Github's statistics, as some code was overwritten and files moved around in the final rush to organize and present the code.
+
+\subsubsection*{Further Progress}
+We do believe that our work has many avenues for improvement and further development. With better hardware, we believe that the BERT based ML Recommender model can be deployed successfully, and the DistilBert model could be used in a production environment without too much hassle.
+
+Further, we believe that utilizing manpower to parse and analyze the SLNB data would prove a very fruitful endeavour. The data can be used for applications well beyond what is in this scope of this Software Development project, and will serve our mother country well.
+
+It is also our aim to package the api server into a ready-to-go Docker Image. A docker image is already provided with the project files, but we feel that the API server could be improved further with more modular design, and with the option of adding many more models, and even using a bring-your-own-model sort of system. As long as the recommendation, user data, and metadata formats remain consistent, all deployments can talk to each other and exchange data to boost productivity.
