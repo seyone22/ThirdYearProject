@@ -5,6 +5,7 @@
 \geometry{a4paper, margin=1in}
 
 \title{Test Case Documentation}
+\date{}
 
 \begin{document}
 
@@ -12,6 +13,7 @@
 
 \section*{Test Case Chart}
 
+% Test Case 1
 \noindent
 \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
     \hline
@@ -69,6 +71,62 @@
         \item TC001-1: Pass
         \item TC001-2: Pass
         \item TC001-3: Pass
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Test Case ID:} & TC002 \\ \hline
+    \textbf{Title:} & User Interaction \\ \hline
+    \textbf{Precondition:} & The recommendation model is deployed. \\ \hline
+    \textbf{Assumption:} & User selects a book within the app. \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|X|}
+    \hline
+    \textbf{Number of Test Cases} & \textbf{Sub Test Case} & \textbf{Description and Expected Results} \\ \hline
+    1 & TC002-1 & User selects a book and provides recommendation. \\ \hline
+    2 & TC002-2 & App updates the interaction matrix. \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Expected Result:} & 
+    \begin{itemize}
+        \item The app should give correct results.
+        \item Subsequent recommendations consider this new interaction.
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Actual Result:} & 
+    \begin{itemize}
+        \item The app provided correct recommendations.
+        \item Subsequent recommendations considered the new interaction.
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Actual Output:} & 
+    \begin{itemize}
+        \item Correct recommendations were displayed.
+        \item Interaction matrix was successfully updated.
+    \end{itemize}
+    \\ \hline
+    \textbf{Pass/Fail:} & 
+    \begin{itemize}
+        \item TC002-1: Pass
+        \item TC002-2: Pass
     \end{itemize}
     \\ \hline
 \end{tabularx}
