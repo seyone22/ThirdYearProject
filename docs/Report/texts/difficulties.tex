@@ -2,4 +2,28 @@ During development of this project, we faced many difficulties in implementing t
 
 We utilized various datasets to train our models. From datasets pre-made for the purposes of training AI, to data database dumps of popular online libraries, we had no problems finding ready-to-use data for training our recommender in English. The problems arose when we tried to create datasets in Sinhala and Tamil languages.
 
-Towards this end, we requested the assistance of the National Library of Sri Lanka, and obtained their Sri Lanka National Bibliography (Data from January 2000, to June 2022). This is a compedium of 22 years of every book published in Sri Lanka, and the data was available trilingually.
+Towards this end, we requested the assistance of the National Library of Sri Lanka, and obtained their Sri Lanka National Bibliography (Data from January 2000, to June 2022). This is a compedium of 22 years of every book published in Sri Lanka, and the data was available trilingually. The majority of the data is in digitally typed PDFs, while some of the older SLNB volumes are Scanned PDFs of the original print volumes. Even with the digital PDFs, the bibliography entries are incredibly hard to parse.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../../assets/snlb_entry.png}
+    \caption{A page of bibliographies}
+    \label{fig:slnbpage}
+\end{figure}
+
+As you can see from the above bibliography page, the bibliographies are given in a two column layout, with the bibliographies themselves having no consistent format.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/slnb_june_pg47.png}
+    \caption{A page of bibliographies}
+    \label{fig:slnbpage}
+\end{figure}
+
+The problem is made worse by the fact that, with the way the PDF is made, the two column layout is not parsed properly by pdf analysis algorithms. This makes it such that data from two colums are mashed up together, creating an unreadable jumble of text. In order to utilize this resource, a massive undertaking to extract, clean, and standardize the text would have to be attempted.
+
+Upon research, we believe that mass scale datasets used by companies such as OpenAI, Google, Amazon, and Microsoft are mostly created by hand. A novel technique for utilizing an AI preprocessor model to create structured data from internet scale mass data was proposed by OpenAI, and we feel that the approach used there (manually generate 20\% of the data, have the preprocessor model extract the rest) would have been effective, but hardware constraints limited us in the exploration of this technique.
+The technique proposed by OpenAI leverages a structured dataset which is used to train a model to extract data from internet-scale data. This data is obtained by mass scale human workers, obtained through the Amazon M-Turk program. All in all, the paper estimates that they spent roughly 10,000 US Dollars to extract 70,000 points of data. That computes to around Rs.3,000,000, or 3 Million Rupees.
+
+A large scale orchestrated effort to parse this data into a machine readable format would prove useful for further research into LLMs and Deep Neural networks which can parse and understand Sinhala and Tamil languages, but is beyond the scope of this project at this time.
+
