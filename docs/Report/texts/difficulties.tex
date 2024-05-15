@@ -1,3 +1,4 @@
+\subsubsection{Data Extraction}
 During development of this project, we faced many difficulties in implementing the initial scope of our project. The primary and insurmountable hurdle we faced was with data. Our initial scope was to make the recommendation model multilingual, and able to understand queries from multiple languages. We primarily focussed on English, Sinhala, and Tamil as our languages of choice, as they are the main three languages of Sri Lanka.
 
 We utilized various datasets to train our models. From datasets pre-made for the purposes of training AI, to data database dumps of popular online libraries \cite{goodbooks-10k-extended}, we had no problems finding ready-to-use data for training our recommender in English. The problems arose when we tried to create datasets in Sinhala and Tamil languages.
@@ -29,11 +30,12 @@ A large scale orchestrated effort to parse this data into a machine readable for
 
 While our initial goal was to extract this data and store it in a immutable datastore like Blockchain or IPFS, we were ultimately unable to do so due to the aforementioned issues with data extraction. We hope that our work so far will prove useful to researchers and developers in the future hoping to work on this same matter.
 
+\subsubsection{Collaboration}
 Further, we faced a plethora of issues when it comes to collaboration. Due to our relative inexperience with Git, managing the various branches, tracking, and updating them, and merging changes was handled haphazardly. The availability of \texttt{git cherry-pick} was sadly realized a very late stage in the project, and this caused a few members contributions to not be recorded in Github's statistics, as some code was overwritten and files moved around in the final rush to organize and present the code.
 
-\subsubsection*{Further Progress}
+\subsubsection{Further Progress}
 We have identified a few avenues for improvement and further development of our work. With better hardware, the BERT based ML Recommender model can be deployed successfully, and the DistilBert model could be used in a production environment without too much hassle.
 
 Further, utilizing manpower to parse and analyze the SLNB data would prove a very fruitful endeavour. The data can be used for applications well beyond what is in this scope of this Software Development project, and will serve our mother country well.
 
-It is also our aim to package the api server into a ready-to-go Docker Image. A docker image is already provided with the project files, but we feel that the API server could be improved further with more modular design, and with the option of adding many more models, and even using a bring-your-own-model sort of system. As long as the recommendation, user data, and metadata formats remain consistent, all deployments can talk to each other and exchange data to boost productivity.
+The API Server and Demo Application are available as ready to go Docker images. A docker image is already provided with the project files, the API Server design could be modularized further, and with the option of adding many more models, and even using a bring-your-own-model sort of system. As long as the recommendation, user data, and metadata formats remain consistent, all deployments can talk to each other and exchange data to boost productivity.
