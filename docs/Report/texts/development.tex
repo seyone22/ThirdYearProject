@@ -210,3 +210,6 @@ Modularity and reusability was a primary focus in the actual code itself. As we 
 The application architecture is divvied up as follows.
 \texttt{page.js} contains the main SPA code, and is generated client side. NextJS by default renders everything on server side, but we had to use client side rendering in order to implement React Hooks to do state management of the data obtained from the server. We were not too concerned with performance drawbacks due to client side rendering here, as the computations performed are minimal, and deal only with computing and displaying the API data.
 \texttt{recommender.api.services} is the service that interacts with the API endpoint. An HTTP POST request is sent to the server, (currently hardcoded to \texttt{http://localhost:5000/predict}), and will fetch the predictions for a given book title. By default, this function requests data using the \texttt{fuzzy-tf-idf} model.
+
+As of writing, no significant effort was made into the CSS of the web application, as we expect every actual implementation of this system to be different, and use their own individual branding. We have incorporated \texttt{react-bootstrap} to simplify the app layout, and make it look more aesthetic and user friendly for demonstration purposes.
+
