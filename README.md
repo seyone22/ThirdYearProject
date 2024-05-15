@@ -39,3 +39,5 @@ For any questions or feedback, please contact the project maintainers:
 - Tharushi Nimnadi (2019/ICT/66)
 - Ashma Sandeepa (2019/ICT/85)
 - Sonali Kalpani (2019/ICT/108)
+- Ihsana (2019/ICT/35)
+- Zeema (2019/ICT/98)
