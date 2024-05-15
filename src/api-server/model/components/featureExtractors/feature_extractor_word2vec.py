@@ -42,7 +42,6 @@ class FeatureExtractor:
         books_df_subset = pd.get_dummies(books_df_processed, columns=['language_code'])
 
         # Combine document embeddings with other features
-        composite_feature_vector = np.hstack([binarized_genres, document_embeddings,
-                                              books_df_subset.drop(columns=['genres', 'title', 'description']).values])
+        composite_feature_vector = np.hstack([binarized_genres, document_embeddings])
 
         return composite_feature_vector

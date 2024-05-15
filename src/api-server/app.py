@@ -5,7 +5,7 @@ import pandas as pd
 from ast import literal_eval
 
 app = Flask(__name__)
-CORS(app, resources={r"/predict": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 filepath = './data/books_enriched.csv'
 print(f'Importing Data from {filepath}...')
@@ -16,9 +16,9 @@ print('Date import complete.\n')
 # Load models
 models = {
     'tf-idf': load('model-tf-idf.joblib'),
-    'fuzzy-tf-idf': load('model-fuzzy-tf-idf.joblib')
+    'fuzzy-tf-idf': load('model-fuzzy-tf-idf.joblib'),
     # 'distilbert': load('model-distilbert.joblib')
-    # Add other models here
+    'word2vec': load('model-word2vec.joblib')
 }
 
 data_index = pd.Series(books_df.index, index=books_df['title']).drop_duplicates()
@@ -42,6 +42,19 @@ def get_available_models():
         return {'models': list(models.keys())}
 
 
+@app.route('/search', methods=['POST'])
+def search_books():
+    data = request.get_json()
+    if not data:
+        return {'error': 'Invalid or malformed request'}, 400
+    if 'search-term' not in data:
+        return {'error': 'No search term provided'}, 400
+    if data['search-term'] is '':
+        return {'error': 'Empty search string'}, 400
+
+
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
@@ -59,6 +72,10 @@ def predict():
 
     # Select the model
     model = models[selected_model]
+
+    if selected_model == 'tf-idf':
+        if title not in data_index:
+            return {'error': 'Title not in Database, and Fuzzy search not enabled!'}, 404
 
     # Run the prediction, and see if it's empty
     prediction = model(title)
