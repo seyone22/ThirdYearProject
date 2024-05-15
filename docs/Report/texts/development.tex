@@ -1,0 +1,215 @@
+Development was split into three phases. Namely,
+\begin{itemize}
+    \item API Creation
+    \item Demo Application Creation
+    \item Testing \& Integration
+\end{itemize}
+
+\subsubsection{API Creation}
+We chose to run our API on Flask, for it's performance and ease of use. Since
+we simply needed to deploy the model and have a few routes to describe the
+functionalities of the API, and to serve the models, we felt that a
+micro-framework like Flask would be the best.
+
+The API contains the following routes.
+\begin{itemize}[label={}]
+    \item \texttt{/predict}
+    \item \texttt{/models}
+\end{itemize}
+
+\texttt{/predict} is a HTTP POST endpoint, and is used to serve the Recommender models themselves. This accepts two parameters, \texttt{title}, and \texttt{model}. \texttt{Title} is the name of the book for which we want recommendations. \texttt{Model} gives shorthand for the various models able to be served by this API. For now, we can serve \texttt{distilbert}, \texttt{distilbert\_v2}, \texttt{bert}, \texttt{tf\_idf}, and \texttt{word2vec} models.
+
+\texttt{/models} is a HTTP GET endpoint, and simply returns a list of available models that can be used by the client to request recommendations.
+
+\subsubsection*{Recommender Models}
+We tried various approaches in creating the recommender models. First, we tried traditional ML techniques to create a model that can recommend books based on simiarities in content to other books. Our first model, \texttt{tf\_idf}, ended up being our most stable and useful model.
+
+During development of the models, we faced various setbacks. One pitfall we encountered was due to us using Google Colaboratory to test our models. As we exported the model, and imported the code to our API program, the dumped model (using joblib) would not run. We later figured out that the dumping has to be done within the same package as will be used in execution, and that the dumping has to be done from a seperate python file (we created a file called dump\_model), else it will not create the \_\_main\_\_ function properly.
+
+\subsubsection*{TF-IDF}
+\texttt{tf\_idf} utilizes Term Frequency - Inverse Document Frequency to generate vector embeddings for the various fields used to compare books. Term Frequency-Inverse Document Frequency (TF-IDF) is a numerical statistic used in information retrieval and text mining to reflect the importance of a term in a document relative to a collection of documents (corpus). It is commonly used as a weighting factor in various text analysis tasks such as document classification, information retrieval, and text similarity calculation. In this case, we utilized TF-IDF to generate embeddings for the book titles and descriptions. This model also processes language codes, genres, and author data, but utilizes different methodologies to convert this data into embeddings. For genres, we use Multi-Label Binarization, and a hashing algorithm to compute embeddings for the author field. The libraries implementing these algorithtms were taken from \texttt{sklearn}.
+
+For this model, we utilized Cosine Similarity as our measure of similarity, as
+it provided the best recommendations as per (limited) user testing. Given below
+is the feature extraction portion of the TF-IDF Model.
+
+\begin{lstlisting}[language=Python, caption={Feature Extraction using traditional ML}, label={lst:example}, linewidth=\linewidth, breaklines=true]
+    class FeatureExtractor:
+    def extract_features(self, books_df_processed):
+        vectorizer = TfidfVectorizer()
+
+        # Count of unique authors
+        count_of_unique_authors = books_df_processed['author'].nunique()
+
+        hasher = FeatureHasher(n_features=count_of_unique_authors, input_type='string')
+        mlb = MultiLabelBinarizer()
+
+        # Hash the authors
+        # author_features = hasher.transform(books_df_subset['author'])
+
+        # Binarize the genres column
+        binarized_genres = mlb.fit_transform(books_df_processed['genres'])
+
+        # One-hot encode the language_code
+        books_df_subset = pd.get_dummies(books_df_processed, columns=['language_code'])
+
+        # Vectorize the title column
+        title_features = vectorizer.fit_transform(books_df_subset['title'])
+
+        # Vectorize the description column
+        description_features = vectorizer.fit_transform(books_df_subset['description'])
+
+        # Composite feature Vector
+        composite_feature_vector = hstack([binarized_genres, title_features, description_features])
+
+        return composite_feature_vector
+\end{lstlisting}
+
+* Note that the Author embeddings are suppressed in this code, and it is supressed from the model because the data in the original dataset is not clean enough, which resulted in improper recommendations when using that column.
+
+\subsubsection*{Fuzzy TF-IDF}
+This model is a simple modification of the TF-IDF model, which adds a fuzzy logic layer to the algorithm. This ensures that the closest match to a given book title is found using fuzzy logic, and that book title is processed in the recommender algorithm. The reason we decided to go this way is because in the event the user makes a typo, or does not know the name of the book in the exact format that is in the database (for instance, \texttt{The Smell of Death: Death \#3 (2003), the user might just type \texttt{The Smell of Death} or \texttt{The Seell of Dearth}})
+
+\subsubsection*{Bert \& DistilBert}
+BERT is a language model based on the transformer architecture, released in 2018 by researchers at Google. We intended to use BERT for generating embeddings for the data, as transformer based pre-trained models provide significant advantages over traditional ML methodologies for extracting richer relationships between text tokens.
+
+DistilBert is a newer model released by Google that is 40\% smaller than Bert,
+yet provides 95\% of it's functionality. We were able to get a rudimentary
+model based on DistilBert running once, but without all the parameters it was
+ultimately useless.
+
+While this was the idea in theory, we were unable to actually train any of the
+BERT based models, as the hardware available to us was not sufficient to train
+the model in any reasonable length of time. The best machine available at our
+disposal was a laptop equipped with an AMD Rzyen 9 6900HX processor, 16
+Gigabytes of RAM, and a AMD Radeon 6700S GPU. BERT / DISTILIBERT is not
+optimized for the AMD arrchitecture, and caused massive issues during training.
+
+\begin{lstlisting}[language=Python, caption={Feature Extraction using DistilBert}, label={lst:example}, linewidth=\linewidth, breaklines=true]
+    class FeatureExtractor:
+    def __init__(self, model_name="distilbert-base-uncased"):
+        self.tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+        self.model = TFDistilBertModel.from_pretrained(model_name)
+
+    def extract_features(self, books_df_processed):
+        document_embeddings = []
+        for author, title, desc, genres in zip(books_df_processed['author'], books_df_processed['title'],
+        books_df_processed['description'], books_df_processed['genres']):
+            # Concatenate author, title, and description
+            input_text = author + ' ' + title + ' ' + desc
+            genre_text = ' '.join(genres)
+            input_text = input_text + ' ' + genre_text
+
+            # Tokenize input text
+            inputs = self.tokenizer(input_text, padding=True, truncation=True, return_tensors="tf")
+
+            # Forward pass through BERT model
+            outputs = self.model(inputs)
+
+            # Extract embeddings
+            last_hidden_states = outputs.last_hidden_state
+            # You can choose to use the embedding of the [CLS] token or pool the embeddings to get a single vector
+            pooled_embedding = tf.reduce_mean(last_hidden_states, axis=1)
+            document_embeddings.append(pooled_embedding.numpy())
+
+        # Combine document embeddings with other features
+        ##language_features = pd.get_dummies(books_df_processed['language_code']).values
+        composite_feature_vector = np.vstack([document_embeddings])
+
+        return composite_feature_vector
+\end{lstlisting}
+
+Note that distilbert and distilbert\_v2 are two seperate models. In v2, we are
+capturing the embeddings seperately for each field, and then combining them
+together during model formation. In the original model, we concatenate all the
+fields into one string, and use that to train the model. We feel that v2 should
+have better performance across the board, but are unable to test it due to
+hardware limitations.
+
+\subsubsection*{Word2Vec}
+Word2Vec is another traditional ML approach to generating embeddings. We used Word2Vec on all the available fields (title, description, author, genres), and the result was not satisfactory. The resultant model produced matches that simply matched strings within the other titles, and thus did not capture any semantic meaning behind the words themselves.
+
+We left the model in the system, for testing and evaluation purposes.
+
+\begin{lstlisting}[language=Python, caption={Feature Extraction using traditional Word2Vec}, label={lst:example}, linewidth=\linewidth, breaklines=true]
+    class FeatureExtractor:
+    def __init__(self):
+        self.word2vec_model = None
+
+    def train_word2vec_model(self, books_df_processed):
+        # Tokenize text (title and description) into words
+        tokenized_text = [word_tokenize(title + ' ' + desc) for title, desc in
+                          zip(books_df_processed['title'], books_df_processed['description'])]
+
+        # Train Word2Vec model
+        self.word2vec_model = Word2Vec(sentences=tokenized_text, vector_size=100, window=5, min_count=1, workers=4)
+
+    def extract_features(self, books_df_processed):
+        if self.word2vec_model is None:
+            self.train_word2vec_model(books_df_processed)
+
+        # Generate document embeddings using Word2Vec
+        document_embeddings = []
+        for title, desc in zip(books_df_processed['title'], books_df_processed['description']):
+            tokenized_title = word_tokenize(title)
+            tokenized_desc = word_tokenize(desc)
+            title_embedding = np.mean(
+                [self.word2vec_model.wv.get_vector(word) for word in tokenized_title if word in self.word2vec_model.wv],
+                axis=0)
+            desc_embedding = np.mean(
+                [self.word2vec_model.wv.get_vector(word) for word in tokenized_desc if word in self.word2vec_model.wv],
+                axis=0)
+            document_embeddings.append(title_embedding)
+
+        # Binarize the genres column
+        mlb = MultiLabelBinarizer()
+        binarized_genres = mlb.fit_transform(books_df_processed['genres'])
+
+        # One-hot encode the language_code
+        books_df_subset = pd.get_dummies(books_df_processed, columns=['language_code'])
+
+        # Combine document embeddings with other features
+        composite_feature_vector = np.hstack([binarized_genres, document_embeddings,
+        books_df_subset.drop(columns=['genres', 'title', 'description']).values])
+
+        return composite_feature_vector
+\end{lstlisting}
+
+\subsubsection{Demo Application Creation}
+The demo application is needed to demonstrate the functionalities of the API, and also gather user feedback for the performance of the models. The application should be easily accessible, and not weigh down the user's device much, if at all. With these considerations in mind, we chose to create a web-app to demonstrate the model technology.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|l|p{0.4\textwidth}|p{0.4\textwidth}|}
+    \hline
+    \textbf{Feature} & \textbf{Next.js} & \textbf{Vue.js} \\
+    \hline
+    Framework & React-based framework for building server-side rendered (SSR) and static websites. & Progressive JavaScript framework for building interactive web interfaces. \\
+    \hline
+    Routing & Built-in routing capabilities using file-based routing and the `pages` directory structure. & Vue Router is the official routing solution for Vue.js applications. \\
+    \hline
+    State Management & Supports various state management solutions including React Context API, Redux, and MobX. & Supports Vuex, a state management library inspired by Flux and Redux. \\
+    \hline
+    Server-side Rendering (SSR) & Built-in support for SSR with server-side rendering of React components. & SSR is possible using frameworks like Nuxt.js, which is built on top of Vue.js. \\
+    \hline
+    Community & Active community support and ecosystem with extensive documentation and resources. & Large and vibrant community with a rich ecosystem of libraries and plugins. \\
+    \hline
+    Learning Curve & Requires knowledge of React and JavaScript ecosystem. & Requires knowledge of Vue.js and its ecosystem. \\
+    \hline
+    \end{tabular}
+    \caption{Comparison between Next.js and Vue.js}
+    \label{tab:nextjs-vs-vuejs}
+    \end{table}
+
+Our team was familiar with many web solution stacks. But overall, we wanted to keep the development within NodeJS, as our entire team was very well acquanite with JavaScript, having had a wonderful instructor to teach us. The next problem was the choice of framework. Multiple choices came up, with frontline choices being NextJS and VueJS. Given below are some notable differences between the two fullstack frameworks.
+
+As the team member leading the development of the web application was more familiar with NextJS, we decided to choose NextJS. This coincidentally also lended very well into the nature of the application itself, as interactivity wasn't much of a priority with this application, and we wanted to make everything fit into a simple, mostly SSR (server side rendered, for increased performance) application.
+
+Modularity and reusability was a primary focus in the actual code itself. As we wanted the components built in this project to be used in various live projects as individual components, we felt that it was imperative that the code be clean, developer friendly, and easy to modify and extend. To this extent, we followed all the standard best practices when it comes to NextJS development. This application was built on NextJS 14, which uses a newer routing system called the App Router. There was a bit of a learning curve in understanding and the changes from older NextJS versions, but the benefits to using the newer version were enormous, especially on code organization, and on performance.
+
+The application architecture is divvied up as follows.
+\texttt{page.js} contains the main SPA code, and is generated client side. NextJS by default renders everything on server side, but we had to use client side rendering in order to implement React Hooks to do state management of the data obtained from the server. We were not too concerned with performance drawbacks due to client side rendering here, as the computations performed are minimal, and deal only with computing and displaying the API data.
+\texttt{recommender.api.services} is the service that interacts with the API endpoint. An HTTP POST request is sent to the server, (currently hardcoded to \texttt{http://localhost:5000/predict}), and will fetch the predictions for a given book title. By default, this function requests data using the \texttt{fuzzy-tf-idf} model.
+
+As of writing, no significant effort was made into the CSS of the web application, as we expect every actual implementation of this system to be different, and use their own individual branding. We have incorporated \texttt{react-bootstrap} to simplify the app layout, and make it look more aesthetic and user friendly for demonstration purposes.
+
