@@ -231,3 +231,61 @@ NOTE: All the testing was done in a development environment, and no testing was 
     \caption{Test 2}
     \label{fig:test2models}
 \end{figure}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Test Case ID:} & TC002 \\ \hline
+    \textbf{Title:} & Book Recommendation via Next.js Application \\ \hline
+    \textbf{Precondition:} & The Next.js application is running and accessible at port 3000 on the local machine. \\ \hline
+    \textbf{Assumption:} & None \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|X|}
+    \hline
+    \textbf{Number of Test Cases} & \textbf{Sub Test Case} & \textbf{Description and Expected Results} \\ \hline
+    1 & TC002-1 & Type in the name of a book and submit the form in the Next.js application. Expected result: The application returns a list of book recommendations. \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Expected Result:} & 
+    \begin{itemize}
+        \item For TC002-1: The Next.js application returns a list of book recommendations based on the input.
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Actual Result:} & 
+    \begin{itemize}
+        \item For TC002-1: The Next.js application returned a list of book recommendations as expected.
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Actual Output:} & 
+    \begin{itemize}
+        \item For TC002-1: List of recommended books: ['Book A', 'Book B', ...].
+    \end{itemize}
+    \\ \hline
+    \textbf{Pass/Fail:} & 
+    \begin{itemize}
+        \item TC002-1: Pass
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/rudimentary_api_functionality.png}
+    \caption{Rudimentary connection test}
+    \label{fig:test2testApp}
+\end{figure}
