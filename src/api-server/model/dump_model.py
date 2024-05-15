@@ -8,7 +8,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
 # Import recommend_items function from content_based_filtering_model module
-from content_based_fuzzy_filtering_model import recommend_items
+from content_based_filtering_model import recommend_items
 
 # Dump the function to a joblib file
-dump(recommend_items, 'model-fuzzy-tf-idf.joblib')
+dump(recommend_items, 'model-tf-idf.joblib')

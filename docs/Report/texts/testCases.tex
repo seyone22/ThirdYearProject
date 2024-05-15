@@ -22,7 +22,7 @@ NOTE: All the testing was done in a development environment, and no testing was 
     \textbf{Number of Test Cases} & \textbf{Sub Test Case} & \textbf{Description and Expected Results} \\ \hline
     1 & TC001-1 & Input a valid book title and model name and expect the system to return the top 10 recommended books. \\ \hline
     2 & TC001-2 & Input only a valid book title, expects the API to return a descriptive error message. \\ \hline
-    3 & TC001-3 & Inputs only a invalid book title, expects the API to return recommendations for the closest match \\ \hline
+    3 & TC001-3 & Inputs only a invalid book title and model, expects the API to return recommendations for the closest match \\ \hline
     4 & TC001-4 & Inputs a valid book title and invalid model name, expects the API to return a descriptive error message \\ \hline
     5 & TC001-4 & Inputs a valid book title and valid model name and some other junk data, expects the API to return a list of recommended books \\ \hline
 \end{tabularx}
@@ -73,6 +73,38 @@ NOTE: All the testing was done in a development environment, and no testing was 
     \end{itemize}
     \\ \hline
 \end{tabularx}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/test_1.png}
+    \caption{Test 1}
+    \label{fig:test1}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/test_2.png}
+    \caption{Test 2}
+    \label{fig:test2}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/test_3.png}
+    \caption{Test 3}
+    \label{fig:test3}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/test_4.png}
+    \caption{Test 4}
+    \label{fig:test4}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/test_5.png}
+    \caption{Test 5}
+    \label{fig:test5}
+\end{figure}
+
 
 \noindent
 \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
@@ -129,3 +161,73 @@ NOTE: All the testing was done in a development environment, and no testing was 
     \end{itemize}
     \\ \hline
 \end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Test Case ID:} & TC001 \\ \hline
+    \textbf{Title:} & Get Available Models \\ \hline
+    \textbf{Precondition:} & The server is running and the models endpoint is accessible. \\ \hline
+    \textbf{Assumption:} & None \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|X|}
+    \hline
+    \textbf{Number of Test Cases} & \textbf{Sub Test Case} & \textbf{Description and Expected Results} \\ \hline
+    1 & TC001-1 & Send a GET request to the models endpoint with no data. Expected result: The server returns a list of available models. \\ \hline
+    2 & TC001-2 & Send a request other than GET to the models endpoint. Expected result: The server returns an error. \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Expected Result:} & 
+    \begin{itemize}
+        \item For TC001-1: The server returns a list of available models.
+        \item For TC001-2: The server returns an error.
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Actual Result:} & 
+    \begin{itemize}
+        \item For TC001-1: The server returned a list of available models.
+        \item For TC001-2: The server returned an error.
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{4cm}|X|}
+    \hline
+    \textbf{Actual Output:} & 
+    \begin{itemize}
+        \item For TC001-1: List of available models: ['model1', 'model2', ...].
+        \item For TC001-2: Error message: "Method Not Allowed".
+    \end{itemize}
+    \\ \hline
+    \textbf{Pass/Fail:} & 
+    \begin{itemize}
+        \item TC001-1: Pass
+        \item TC001-2: Pass
+    \end{itemize}
+    \\ \hline
+\end{tabularx}
+\\\\
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/test_1_models.png}
+    \caption{Test 1}
+    \label{fig:test1models}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{../../assets/test_2_models.png}
+    \caption{Test 2}
+    \label{fig:test2models}
+\end{figure}

@@ -9,7 +9,7 @@ from fuzzywuzzy import fuzz
 pd.options.display.float_format = '{:.2f}'.format
 
 """# Import Data"""
-filepath = 'https://raw.githubusercontent.com/malcolmosh/goodbooks-10k/master/books_enriched.csv'
+filepath = './data/books_enriched.csv'
 print(f'Importing Data from {filepath}...')
 # Import data from the goodbooks-10k repo
 books_df = pd.read_csv(filepath, index_col=[0], converters={"genres": literal_eval})
