@@ -24,6 +24,8 @@ The API contains the following routes.
 \subsubsection*{Recommender Models}
 We tried various approaches in creating the recommender models. First, we tried traditional ML techniques to create a model that can recommend books based on simiarities in content to other books. Our first model, \texttt{tf\_idf}, ended up being our most stable and useful model.
 
+During development of the models, we faced various setbacks. One pitfall we encountered was due to us using Google Colaboratory to test our models. As we exported the model, and imported the code to our API program, the dumped model (using joblib) would not run. We later figured out that the dumping has to be done within the same package as will be used in execution, and that the dumping has to be done from a seperate python file (we created a file called dump\_model), else it will not create the \_\_main\_\_ function properly.
+
 \subsubsection*{TF-IDF}
 \texttt{tf\_idf} utilizes Term Frequency - Inverse Document Frequency to generate vector embeddings for the various fields used to compare books. Term Frequency-Inverse Document Frequency (TF-IDF) is a numerical statistic used in information retrieval and text mining to reflect the importance of a term in a document relative to a collection of documents (corpus). It is commonly used as a weighting factor in various text analysis tasks such as document classification, information retrieval, and text similarity calculation. In this case, we utilized TF-IDF to generate embeddings for the book titles and descriptions. This model also processes language codes, genres, and author data, but utilizes different methodologies to convert this data into embeddings. For genres, we use Multi-Label Binarization, and a hashing algorithm to compute embeddings for the author field. The libraries implementing these algorithtms were taken from \texttt{sklearn}.
 
@@ -65,10 +67,16 @@ is the feature extraction portion of the TF-IDF Model.
 
 * Note that the Author embeddings are suppressed in this code, and it is supressed from the model because the data in the original dataset is not clean enough, which resulted in improper recommendations when using that column.
 
+\subsubsection*{Fuzzy TF-IDF}
+This model is a simple modification of the TF-IDF model, which adds a fuzzy logic layer to the algorithm. This ensures that the closest match to a given book title is found using fuzzy logic, and that book title is processed in the recommender algorithm. The reason we decided to go this way is because in the event the user makes a typo, or does not know the name of the book in the exact format that is in the database (for instance, \texttt{The Smell of Death: Death \#3 (2003), the user might just type \texttt{The Smell of Death} or \texttt{The Seell of Dearth}})
+
 \subsubsection*{Bert \& DistilBert}
 BERT is a language model based on the transformer architecture, released in 2018 by researchers at Google. We intended to use BERT for generating embeddings for the data, as transformer based pre-trained models provide significant advantages over traditional ML methodologies for extracting richer relationships between text tokens.
 
-DistilBert is a newer model released by Google that is 40\% smaller than Bert, yet provides 95\% of it's functionality. We were able to get a rudimentary model based on DistilBert running once, but without all the parameters it was ultimately useless.
+DistilBert is a newer model released by Google that is 40\% smaller than Bert,
+yet provides 95\% of it's functionality. We were able to get a rudimentary
+model based on DistilBert running once, but without all the parameters it was
+ultimately useless.
 
 While this was the idea in theory, we were unable to actually train any of the
 BERT based models, as the hardware available to us was not sufficient to train
@@ -86,7 +94,7 @@ optimized for the AMD arrchitecture, and caused massive issues during training.
     def extract_features(self, books_df_processed):
         document_embeddings = []
         for author, title, desc, genres in zip(books_df_processed['author'], books_df_processed['title'],
-                                               books_df_processed['description'], books_df_processed['genres']):
+        books_df_processed['description'], books_df_processed['genres']):
             # Concatenate author, title, and description
             input_text = author + ' ' + title + ' ' + desc
             genre_text = ' '.join(genres)
@@ -111,7 +119,12 @@ optimized for the AMD arrchitecture, and caused massive issues during training.
         return composite_feature_vector
 \end{lstlisting}
 
-Note that distilbert and distilbert\_v2 are two seperate models. In v2, we are capturing the embeddings seperately for each field, and then combining them together during model formation. In the original model, we concatenate all the fields into one string, and use that to train the model. We feel that v2 should have better performance across the board, but are unable to test it due to hardware limitations.
+Note that distilbert and distilbert\_v2 are two seperate models. In v2, we are
+capturing the embeddings seperately for each field, and then combining them
+together during model formation. In the original model, we concatenate all the
+fields into one string, and use that to train the model. We feel that v2 should
+have better performance across the board, but are unable to test it due to
+hardware limitations.
 
 \subsubsection*{Word2Vec}
 Word2Vec is another traditional ML approach to generating embeddings. We used Word2Vec on all the available fields (title, description, author, genres), and the result was not satisfactory. The resultant model produced matches that simply matched strings within the other titles, and thus did not capture any semantic meaning behind the words themselves.
@@ -157,7 +170,43 @@ We left the model in the system, for testing and evaluation purposes.
 
         # Combine document embeddings with other features
         composite_feature_vector = np.hstack([binarized_genres, document_embeddings,
-                                              books_df_subset.drop(columns=['genres', 'title', 'description']).values])
+        books_df_subset.drop(columns=['genres', 'title', 'description']).values])
 
         return composite_feature_vector
 \end{lstlisting}
+
+\subsubsection{Demo Application Creation}
+The demo application is needed to demonstrate the functionalities of the API, and also gather user feedback for the performance of the models. The application should be easily accessible, and not weigh down the user's device much, if at all. With these considerations in mind, we chose to create a web-app to demonstrate the model technology.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|l|p{0.4\textwidth}|p{0.4\textwidth}|}
+    \hline
+    \textbf{Feature} & \textbf{Next.js} & \textbf{Vue.js} \\
+    \hline
+    Framework & React-based framework for building server-side rendered (SSR) and static websites. & Progressive JavaScript framework for building interactive web interfaces. \\
+    \hline
+    Routing & Built-in routing capabilities using file-based routing and the `pages` directory structure. & Vue Router is the official routing solution for Vue.js applications. \\
+    \hline
+    State Management & Supports various state management solutions including React Context API, Redux, and MobX. & Supports Vuex, a state management library inspired by Flux and Redux. \\
+    \hline
+    Server-side Rendering (SSR) & Built-in support for SSR with server-side rendering of React components. & SSR is possible using frameworks like Nuxt.js, which is built on top of Vue.js. \\
+    \hline
+    Community & Active community support and ecosystem with extensive documentation and resources. & Large and vibrant community with a rich ecosystem of libraries and plugins. \\
+    \hline
+    Learning Curve & Requires knowledge of React and JavaScript ecosystem. & Requires knowledge of Vue.js and its ecosystem. \\
+    \hline
+    \end{tabular}
+    \caption{Comparison between Next.js and Vue.js}
+    \label{tab:nextjs-vs-vuejs}
+    \end{table}
+
+Our team was familiar with many web solution stacks. But overall, we wanted to keep the development within NodeJS, as our entire team was very well acquanite with JavaScript, having had a wonderful instructor to teach us. The next problem was the choice of framework. Multiple choices came up, with frontline choices being NextJS and VueJS. Given below are some notable differences between the two fullstack frameworks.
+
+As the team member leading the development of the web application was more familiar with NextJS, we decided to choose NextJS. This coincidentally also lended very well into the nature of the application itself, as interactivity wasn't much of a priority with this application, and we wanted to make everything fit into a simple, mostly SSR (server side rendered, for increased performance) application.
+
+Modularity and reusability was a primary focus in the actual code itself. As we wanted the components built in this project to be used in various live projects as individual components, we felt that it was imperative that the code be clean, developer friendly, and easy to modify and extend. To this extent, we followed all the standard best practices when it comes to NextJS development. This application was built on NextJS 14, which uses a newer routing system called the App Router. There was a bit of a learning curve in understanding and the changes from older NextJS versions, but the benefits to using the newer version were enormous, especially on code organization, and on performance.
+
+The application architecture is divvied up as follows.
+\texttt{page.js} contains the main SPA code, and is generated client side. NextJS by default renders everything on server side, but we had to use client side rendering in order to implement React Hooks to do state management of the data obtained from the server. We were not too concerned with performance drawbacks due to client side rendering here, as the computations performed are minimal, and deal only with computing and displaying the API data.
+\texttt{recommender.api.services} is the service that interacts with the API endpoint. An HTTP POST request is sent to the server, (currently hardcoded to \texttt{http://localhost:5000/predict}), and will fetch the predictions for a given book title. By default, this function requests data using the \texttt{fuzzy-tf-idf} model.
