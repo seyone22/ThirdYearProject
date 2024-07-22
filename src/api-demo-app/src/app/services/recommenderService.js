@@ -49,12 +49,13 @@ export async function getModels() {
     }
 }
 
-export async function insertSelectedRecommendations(recommendationsList, book) {
+export async function insertSelectedRecommendations(id, recommendationsList, book) {
     try {
         dbConnect()
 
         for (const recommendation of recommendationsList) {
             let r = new Recommendation({
+                userId: id,
                 bookName: book,
                 recommendationName: recommendation
             })

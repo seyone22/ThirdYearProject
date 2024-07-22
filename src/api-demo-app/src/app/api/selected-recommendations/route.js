@@ -12,7 +12,7 @@ export async function POST(req) {
         const { selectedRecommendations, bookName } = reqBody
 
         // Approve the given artwork
-        const result = await insertSelectedRecommendations(selectedRecommendations, bookName)
+        const result = await insertSelectedRecommendations(user._id, selectedRecommendations, bookName)
 
         // Send a response indicating success
         return NextResponse.json(result, {status: 200})
