@@ -5,7 +5,7 @@ import pandas as pd
 from ast import literal_eval
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "http://localhost:3001"]}})
 
 filepath = './data/books_enriched.csv'
 print(f'Importing Data from {filepath}...')

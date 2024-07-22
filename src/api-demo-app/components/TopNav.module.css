@@ -1,0 +1,102 @@
+/* TopNav.module.css */
+
+.navContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    z-index: 999;
+}
+
+.navItemList, .navItemList * {
+    list-style-type: none;
+    text-decoration: none;
+    color: var(--foreground-rgb);
+
+    margin: 0;
+    padding: 0;
+    text-align: center;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.navItemList * :hover {
+    text-decoration: underline;
+}
+
+.navItem {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 15px;
+    width: fit-content;
+}
+
+.userIcon {
+    border-radius: 100%;
+    margin-right: 12px;
+
+}
+
+.navItem button {
+    background-color: transparent;
+    font-size: 1em;
+    font-family: var(--font);
+}
+
+.userDetail {
+    display: flex;
+    flex-direction: row;
+}
+
+.navItemCurrent {
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: lavender;
+    color: black !important;
+}
+
+.hamburgerMenu {
+    display: none; /* Initially hide the hamburger menu on larger screens */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.hamburgerIcon {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 10px;
+}
+
+.hamburgerIcon::after {
+    top: auto;
+    bottom: 50%;
+}
+
+.navItemList.active {
+    display: block; /* Show the navigation items when the hamburger menu is active */
+}
+
+/* Media query for small screens (e.g., mobile phones) */
+@media screen and (max-width: 600px) {
+    .navItemList {
+        display: none; /* Hide the navigation items by default on small screens */
+    }
+
+    .hamburgerMenu {
+        display: block; /* Show the hamburger menu icon on small screens */
+    }
+
+    .navItemList.active {
+        display: block; /* Show the navigation items when the hamburger menu is active */
+    }
+}

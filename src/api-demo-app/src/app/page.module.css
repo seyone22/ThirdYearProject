@@ -252,3 +252,15 @@
     transform: rotate(0deg);
   }
 }
+
+.row {
+  display: flex;
+}
+
+.checkbox {
+  margin-right: 8px;
+}
+
+.recommendationText {
+
+}

@@ -2,12 +2,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './page.module.css'
 import {useEffect, useState} from "react";
-import {getBookRecommendations, getModels} from "@/app/services/recommender.api.service";
+import {getBookRecommendations, getModels} from "@/app/services/recommenderService";
 import {Button, Dropdown, Form, Toast} from "react-bootstrap";
+import TopNav from "../../components/TopNav";
 
 export default function Home() {
     const [bookName, setBookName] = useState('');
     const [recommendations, setRecommendations] = useState([]);
+    const [selectedRecommendations, setSelectedRecommendations] = useState([]);
+
     const [loading, setLoading] = useState(false);
     const [modelList, setModelList] = useState([]);
     const [selectedModel, setSelectedModel] = useState('fuzzy-tf-idf');
@@ -48,11 +51,43 @@ export default function Home() {
         setSelectedModel(eventKey);
     };
 
+    const handleCheckboxChange = (recommendation) => {
+        setSelectedRecommendations((prevSelected) => {
+            if (prevSelected.includes(recommendation)) {
+                return prevSelected.filter((item) => item !== recommendation);
+            } else {
+                return [...prevSelected, recommendation];
+            }
+        });
+    };
+
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/selected-recommendations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ selectedRecommendations, bookName })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log('Data saved successfully:', data);
+        } catch (error) {
+            console.error('Error saving selected recommendations:', error);
+        }
+    };
+
     return (
         <main className={styles.main}>
+            <TopNav/>
             {showToast && (
                 <Toast className={styles.toast}>
-                    <Toast.Header >
+                    <Toast.Header>
                         <strong className="mr-auto">Error:</strong>
                     </Toast.Header>
                     <Toast.Body>{gotData.toString()}</Toast.Body>
@@ -60,7 +95,7 @@ export default function Home() {
             )}
 
             <div className={styles.title}>
-                <h1>Recommendation API Demo</h1>
+                <h1>Book Recommender</h1>
             </div>
             <div className={styles.inputArea}>
                 <div>
@@ -78,7 +113,8 @@ export default function Home() {
                         <Form.Label>
                             Model:
                         </Form.Label>
-                        <Form.Select className={styles.input} onChange={(e) => handleSelect(e.target.value)} aria-label="Default select example">
+                        <Form.Select className={styles.input} onChange={(e) => handleSelect(e.target.value)}
+                                     aria-label="Default select example">
                             {modelList.map(item => (
                                 <option key={item.id} value={item}>{item}</option>
                             ))}
@@ -95,13 +131,27 @@ export default function Home() {
                     </Form>
                 </div>
             </div>
-            <div>
-                {recommendations.map((recommendation, index) => (
-                    <div className={styles.card} key={recommendation}>
-                        <h5>{recommendation}</h5>
+
+            <>
+                {recommendations.length > 0 && (
+                    <div>
+                        {recommendations.map((recommendation, index) => (
+                            <div className={styles.card} key={recommendation}>
+                                <div className={styles.row}>
+                                    <input
+                                        className={styles.checkbox}
+                                        type="checkbox"
+                                        checked={selectedRecommendations.includes(recommendation)}
+                                        onChange={() => handleCheckboxChange(recommendation)}
+                                    />
+                                    <p className={styles.recommendationText}>{recommendation}</p>
+                                </div>
+                            </div>
+                        ))}
+                        <Button onClick={handleSubmit}>Relevant!</Button>
                     </div>
-                ))}
-            </div>
+                )}
+            </>
         </main>
     );
 }
